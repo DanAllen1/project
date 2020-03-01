@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 操作Project表 -->
+<mapper namespace="dao.ProjectMapper">  
+  <resultMap type="pojo.Project" id="Project">
+	<id property="id" column="id" />
+	<result property="writer" column="writer"/>
+	<result property="date" column="date"/>
+	<result property="title" column="title"/>
+	<result property="description" column="description"/>
+	<result property="detail" column="detail"/>
+	<result property="img" column="img"/>
+  </resultMap>
+  
+  <select id="findProjectById" parameterType="Integer" resultMap="Project">
+	 select *from project
+	 where  id = #{id}
+  </select> 
+  <select id="findProjectBySearchContent" parameterType="String" resultMap="Project">
+	  <bind name="content" value="'%' + searchContent + '%'" /> 
+  	  select *from project where title like #{content}
+  </select>
+  <select id="findProjectByTitle" parameterType="String" resultMap="Project">
+  	 select *from project
+     where title = #{title}    
+  </select>
+  <select id="findAllProject"  resultMap="Project">
+  	 select *from project       
+  </select>
+  <select id="findProjectQuantity"  resultType="Integer">
+  	 select count(*)from project
+  </select>
+  
+  <insert id="insertProject"  parameterType="pojo.Project">
+  	 insert into project
+  	 (writer, date, title, img, description, detail) 
+  	 values(#{writer}, #{date}, #{title}, #{img}, #{description}, #{detail})
+  </insert>
+  
+  <update id="updateProjectById" parameterType="pojo.Project">
+  	 update project 
+  	 set writer = #{writer}, date = #{date}, 
+  	 	 title = #{title}, img = #{img},
+  	 	 description = #{description}, detail = #{detail}
+  	 where id = #{id} 
+  </update>
+  
+  <delete id="deleteProjectById" parameterType="Integer">
+  	 delete from project where id = #{id}
+  </delete>
+</mapper>

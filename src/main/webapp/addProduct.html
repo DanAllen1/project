@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--Fileinput CSS-->
+    <link href="css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="css/fontastic.css">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  </head>
+  <body>
+    <div class="page">
+      <!-- Main Navbar-->
+      <header class="header">
+        <nav class="navbar">
+          <!-- Search Box-->
+          <div class="search-box">
+            <button class="dismiss"><i class="icon-close"></i></button>
+            <form id="searchForm" action="#" role="search">
+              <input type="search" placeholder="What are you looking for..." class="form-control">
+            </form>
+          </div>
+          <div class="container-fluid">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+              <!-- Navbar Header-->
+              <div class="navbar-header">
+                <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
+                  <div class="brand-text d-none d-lg-inline-block"><span>前往</span><strong>主页</strong></div>
+                  <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
+                <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
+              </div>
+              <!-- Navbar Menu -->
+              <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <!-- Search-->
+                <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="icon-search"></i></a></li>
+                <!-- Notifications-->
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span class="badge bg-red badge-corner">12</span></a>
+                  <ul aria-labelledby="notifications" class="dropdown-menu">
+                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
+                        <div class="notification">
+                          <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
+                          <div class="notification-time"><small>4 minutes ago</small></div>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
+                        <div class="notification">
+                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
+                          <div class="notification-time"><small>4 minutes ago</small></div>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
+                        <div class="notification">
+                          <div class="notification-content"><i class="fa fa-upload bg-orange"></i>Server Rebooted</div>
+                          <div class="notification-time"><small>4 minutes ago</small></div>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
+                        <div class="notification">
+                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
+                          <div class="notification-time"><small>10 minutes ago</small></div>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>view all notifications                                            </strong></a></li>
+                  </ul>
+                </li>
+                <!-- Messages                        -->
+                <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope-o"></i><span class="badge bg-orange badge-corner">10</span></a>
+                  <ul aria-labelledby="notifications" class="dropdown-menu">
+                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex"> 
+                        <div class="msg-profile"> <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                        <div class="msg-body">
+                          <h3 class="h5">Jason Doe</h3><span>Sent You Message</span>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex"> 
+                        <div class="msg-profile"> <img src="img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                        <div class="msg-body">
+                          <h3 class="h5">Frank Williams</h3><span>Sent You Message</span>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex"> 
+                        <div class="msg-profile"> <img src="img/avatar-3.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                        <div class="msg-body">
+                          <h3 class="h5">Ashley Wood</h3><span>Sent You Message</span>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>Read all messages   </strong></a></li>
+                  </ul>
+                </li>
+                <!-- Languages dropdown    -->
+                <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><img src="img/flags/16/GB.png" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
+                  <ul aria-labelledby="languages" class="dropdown-menu">
+                    <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/DE.png" alt="English" class="mr-2">German</a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/FR.png" alt="English" class="mr-2">French                                         </a></li>
+                  </ul>
+                </li>
+                <!-- Logout    -->
+                <li class="nav-item"><a href="login.html" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <nav class="side-navbar">
+          <!-- Sidebar Header-->
+          <div class="sidebar-header d-flex align-items-center">
+            <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+            <div class="title">
+              <h1 class="h4">Mark Stephen</h1>
+              <p>Web Designer</p>
+            </div>
+          </div>
+          <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+          <ul class="list-unstyled">
+                    <li><a href="index2.html"> <i class="icon-home"></i>Home </a></li>
+                    <li><a href="productManage.html"> <i class="icon-grid"></i>Product manage </a></li>
+                    <li><a href="projectManage.html"> <i class="fa fa-bar-chart"></i>Project manage </a></li>
+                    <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
+                    <li><a href="#exampledropdownDropdown" aria-expanded="true" data-toggle="collapse"> <i class="icon-interface-windows"></i>Add </a>
+                      <ul id="exampledropdownDropdown" class="collapse.in list-unstyled">
+                        <li class="active"><a href="addProduct.html">Add Product</a></li>
+                        <li><a href="addSort.html">Add Sort</a></li>
+                        <li><a href="addProject.html">Add Project</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="login.html"> <i class="icon-interface-windows"></i>Login page </a></li>
+          </ul><span class="heading">Extras</span>
+          <ul class="list-unstyled">
+            <li> <a href="#"> <i class="icon-flask"></i>Demo </a></li>
+            <li> <a href="#"> <i class="icon-screen"></i>Demo </a></li>
+            <li> <a href="#"> <i class="icon-mail"></i>Demo </a></li>
+            <li> <a href="#"> <i class="icon-picture"></i>Demo </a></li>
+          </ul>
+        </nav>
+        <div class="content-inner">
+          <!-- Page Header-->
+          <header class="page-header">
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">Forms</h2>
+            </div>
+          </header>
+          <!-- Breadcrumb-->
+          <div class="breadcrumb-holder container-fluid">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item active">Forms            </li>
+            </ul>
+          </div>
+          <!-- Forms Section-->
+          <section class="forms"> 
+            <div class="container-fluid">
+              <div class="row">
+                <!-- Form Elements -->
+                <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-close">
+                      <div class="dropdown">
+                        <button type="button" id="closeCard5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                        <div aria-labelledby="closeCard5" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                      </div>
+                    </div>
+                    <div class="card-header d-flex align-items-center">
+                      <h3 class="h4">Fill in necessary information</h3>
+                    </div>
+                    <div class="card-body">
+                      <!--提交前把富文本内容存进表单-->
+                      <form class="form-horizontal" enctype="multipart/form-data" onsubmit="return setDetail()" action="/project/background/product" method="post">
+                        <div class="form-group row">
+                          <label class="col-sm-3 form-control-label">Name</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" name="name" id="name" onchange="checkName(this)" required>
+                            <div class="invalid-feedback">Please change your name.</div>
+                          </div>
+                        </div>
+                        <div class="line"></div>
+                        <div class="form-group row">
+                          <label class="col-sm-3 form-control-label">Description</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" name="description" required><small class="help-block-none">A block of help text that breaks onto a new line and may extend beyond one line.</small>
+                          </div>
+                        </div>
+                        <div class="line"></div>
+                        <div class="form-group row">
+                          <label class="col-sm-3 form-control-label">Date</label>
+                          <div class="col-sm-9">
+                            <input type="text" readonly name="date" value="a" class="form-control" id="date" required>
+                          </div>
+                        </div>
+                        <div class="line"></div>
+                        <div class="form-group row has-success">
+                          <label class="col-sm-3 form-control-label">Price</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control is-valid" name="price" required>
+                          </div>
+                        </div>
+                        <div class="line"></div>
+                        <div class="form-group row">
+                          <label class="col-sm-3 form-control-label">Sort</label>
+                          <div class="col-sm-9">
+                            <select name="category" class="form-control mb-3" id="category">
+
+                            </select>
+                          </div>
+                        </div>
+                        <div class="line"></div>
+                        <div class="form-group row">
+                          <label class="col-sm-3 form-control-label">Leadtime</label>
+                          <div class="col-sm-9">
+                            <input type="text" placeholder="leadtime" class="form-control" name="leadtime" required>
+                          </div>
+                        </div>
+                        <div class="line"></div>
+                        <div class="form-group row">
+                          <label class="col-sm-3 form-control-label">Specification</label>
+                          <div class="col-sm-9">
+                            <input type="text" name="specification" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="line"></div>
+                        <div class="form-group row">
+                          <label class="col-sm-3 form-control-label">Warranty</label>
+                          <div class="col-sm-9">
+                            <input type="text" name="warranty" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="line"></div>
+                        <div class="form-group row">
+                          <label class="col-sm-3 form-control-label">MOQ</label>
+                          <div class="col-sm-9">
+                            <input type="text" name="MOQ" class="form-control" required>
+                          </div>
+                        </div>
+                        <div class="line"></div>
+                        <div class="form-group row">
+                          <label class="col-sm-3 form-control-label">Image For display</label>
+                          <div class="col-sm-9">
+                            <!--使用fileinput插件显示上传的文件-->
+                            <!-- <label class="control-label">Select File</label> -->
+                            <input id="input-21" name="imgs" type="file" multiple accept="image/*" class="file-loading" required>
+                            <small class="help-block-none">默认第一张为主图片，若需选择多张图片按alt+鼠标左键</small>
+                          </div>
+                        </div>
+                        <div class="line"></div>
+                        <div class="form-group row">
+                          <label class="col-sm-3 form-control-label">seo设置</label>
+                          <div class="col-sm-9">
+                            <div class="form-group">
+                              title<input type="text" placeholder="Default input" class="form-control" name="seoTitle" required>
+                            </div>
+                            <div class="form-group">
+                              keywords<input type="text" placeholder="Default input" class="form-control" name="seoKey" required>
+                            </div>
+                            <div class="form-group">
+                              description<input type="text" placeholder=".input-sm" class="form-control" name="seoDescription" required>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="line"></div>
+                        <!--富文本编辑器-->
+                        <div class="form-group row">
+                          <label class="col-sm-3 form-control-label">Detail</label>
+                          <div class="col-sm-9">
+                            <!--用隐藏的input来提交富文本的内容-->
+                            <input type="hidden" name="detail" id="detail" value="" required>
+                            <!--富文本-->
+                            <div id="editor">
+                              
+                            </div>
+                          </div>
+                        </div>
+                        <div class="line"></div>
+                        <div class="form-group row">
+                          <div class="col-sm-4 offset-sm-3">
+                            <button type="submit" class="btn btn-secondary">Cancel</button>
+                            <button type="submit" class="btn btn-primary">New product</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Page Footer-->
+          <footer class="main-footer">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-6">
+                  <p>Copyright &copy; 2019.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+                </div>
+                <div class="col-sm-6 text-right">
+                  <p></p>
+                  <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <!-- JavaScript files-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/jquery-validation/jquery.validate.min.js"></script>
+    <!-- Main File-->
+    <script src="js/front.js"></script>
+    <!--富文本编辑器-->
+    <script type="text/javascript" src="js/wangEditor.js"></script>
+    <!--上传文件的插件-->
+    <script src="js/fileinput.min.js"> </script>
+    <!--获取一些必要的数据-->
+    <script type="text/javascript">
+      //获取时间
+      $(document).ready(function() {
+        setInterval(function() {
+          var time = new Date();  // 程序计时的月从0开始取值后+1
+          var m = time.getMonth() + 1;
+          var t = time.getFullYear() + "-" + m + "-"
+                  + time.getDate() + " " + time.getHours() + ":"
+                  + time.getMinutes() + ":" + time.getSeconds();
+          document.getElementById("date").value=t;
+        }, 1000);
+      });
+
+      //获取分类信息
+      window.onload= $.ajax({
+                url: "/project/foreground/categorys",
+                type: "get",
+                //发送的数据
+                data: "",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (data) {
+                  var category = "";
+                  for (var i = 0;i<data.data.length;i++){
+                    category+="<option>"+data.data[i].sort+"</option>"
+                  }
+                  $("#category").html(category);
+                }
+              });
+    </script>
+    <!--some until-->
+    <script>
+      function checkName(e) {
+        var name = e.value;
+        var status = false;             
+        $.ajax({
+          url: "/project/background/product/name/"+name,
+          type: "get",
+          //发送的数据
+          data: "",
+          contentType: "application/json;charset=UTF-8",
+          dataType: "json",
+          async : false,//设置为同步操作就可以给全局变量赋值成功
+          success: function (data) {
+            if (data.status == 0){
+              alert("用户名重复");
+              e.className = "form-control is-invalid";
+            }
+            else {
+              e.className = "form-control is-valid";
+              status = true;
+              sessionStorage.setItem("status", true);
+            }
+          }
+        });  
+        console.log(sessionStorage.getItem("status"));
+        return status;
+      }
+    </script>
+    <!--文件上传插件fileinput-->
+    <script>
+      $(document).ready(function() {
+        $("#input-21").fileinput({
+          previewFileType: "image",    
+          browseClass: "btn btn-success",
+          browseLabel: "Pick Image",
+          browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
+          removeClass: "btn btn-danger",
+          removeLabel: "Delete",
+          removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i> ",
+          uploadClass: "btn btn-info",
+          uploadLabel: "Upload",
+          uploadIcon: "<i class=\"glyphicon glyphicon-upload\"></i> "
+        });
+      });
+    </script>
+    <!--富文本编辑器-->
+    <script type="text/javascript">
+      var E = window.wangEditor
+      var editor = new E('#editor');
+      editor.customConfig.uploadImgServer = 'background/saveRTFimg' ; // 上传图片到服务器
+      editor.customConfig.uploadFileName = 'RTFimg' ;//设置上传文件的名字
+      editor.customConfig.uploadImgMaxLength = 5  ;//设置上传图片张数上限
+      editor.create();
+      //把文本内容传递给detail表单，并检查图片张数
+      function setDetail() {
+        document.getElementById("detail").value = editor.txt.html();
+        var imgFile = document.getElementById("input-21");
+        //检查照片张数是否不少于两张
+        if(imgFile.files.length>1){
+          //检查用户名是否重复
+          if (checkName(document.getElementById("name"))) {
+            return true;
+          }
+          else {
+            window.location.href = "#name";
+            return  false;
+          }
+          return true;
+        }
+        else{
+            alert("商品图片不能少于两张");
+            return  false;
+        }
+      }
+    </script>
+    <!--检查图片是否少于两张-->
+    <script>
+
+    </script>
+  </body>
+</html>

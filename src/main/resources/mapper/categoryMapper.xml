@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 分类表 -->
+<mapper namespace="dao.CategoryMapper">  
+  <select id="findCategoryById" parameterType="Integer" resultType="pojo.Category">
+  		select *from category where id = #{id}
+  </select>
+  <select id="findIdBySort" parameterType="String" resultType="Integer">
+  		select id from category where sort= #{sort}
+  </select>
+  <select id="findAllCategory"  resultType="pojo.Category">
+  		select *from category 
+  </select>
+  
+  <insert	id="insertCategory" parameterType="pojo.Category">
+  		insert into category(sort) value(#{sort})
+  </insert>
+  
+  <update id="updateCategoryById" parameterType="pojo.Category">
+  		update category set sort = #{sort} where id = #{id}
+  </update>
+  
+  <delete id="deleteCategoryById" parameterType="Integer">
+  		delete from category where id = #{id}
+  </delete>
+</mapper>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>成功</title>
+</head>
+<body>
+
+    <div>
+        <h5 id="operate"></h5>
+        <div id="countdown">
+        	<a>还有5秒返回主页</a>
+        </div>
+    </div>
+
+
+    <!--jQuery-->
+    <script type="text/javascript" src="js/jquery-2.1.1.js"></script>
+
+    <script>
+        //获取url参数的方法
+        function getQueryString(name)
+        {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+            if(r!=null)
+                return  unescape(r[2]);
+            return null;
+        }
+        //
+        var operate = getQueryString("operate");
+        window.onload = function () {         
+            $("#operate").html(operate+"成功");
+        };
+        //倒计时和5秒后返回主页
+        var i = 0;
+        var countdown = 4;
+        var stopUntil = window.setInterval(function () {
+        	if(operate == "postMail"){
+        		$("#countdown").html('<a href="products.html">'+'还有'+countdown+'自动返回主页</a>');
+                countdown--;
+                i++;
+                if (i>4){
+                    window.clearInterval(stopUntil);
+                    window.location.href = "products.html";
+                }
+        	}
+        	else{
+        		$("#countdown").html('<a href="productManage.html">'+'还有'+countdown+'自动返回主页</a>');
+                countdown--;
+                i++;
+                if (i>5){
+                    window.clearInterval(stopUntil);
+                    window.location.href = "productManage.html";
+                }
+        	}          
+        },1000);
+    </script>
+</body>
+</html>

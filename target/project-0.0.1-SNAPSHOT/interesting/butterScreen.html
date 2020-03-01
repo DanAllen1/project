@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+            html{
+                padding: 0;
+                margin: 0;
+            }
+           .butter-screen{
+               position:relative;
+               width: 90%;
+               height: 600px;
+               border-style: solid;
+               border-width: 1px;
+               overflow: hidden;
+           }
+            .bullet{
+                position: absolute;
+                left: 0;
+           }
+    </style>
+</head>
+<body>
+
+    <div class="butter-screen" id="butter-screen">
+
+    </div>
+    <div id="input">
+        <input type="text" id="inputContent" value="">
+        <input type="button" onclick="butterGo()" value="发送">
+    </div>
+
+
+</body>
+<script src="../vendor/jquery/jquery.min.js"></script>
+<script>
+    var bulletId = 0;
+    function butterGo(){
+        var content = document.getElementById("inputContent").value;
+        var i = 0 ;
+        var screenWidth = document.getElementById("butter-screen").offsetWidth;
+        $("#butter-screen").append('<div class="bullet" id="bullet'+bulletId+'">'+content+' </div>');
+        /*document.getElementById("butter-screen").innerHTML +='<div class="bullet" id="bullet'+bulletId+'">'+content+' </div>';*/
+        var slide = document.getElementById("bullet"+bulletId);
+        var stop = window.setInterval(function () {
+            i++;
+            slide.style.left = i+"px";
+            console.log(slide.offsetLeft);
+            console.log(slide.style.left);
+            if (slide.offsetLeft == screenWidth){
+                clearInterval(stop);
+            }
+
+        },10);
+        bulletId++;
+    }
+
+</script>
+</html>

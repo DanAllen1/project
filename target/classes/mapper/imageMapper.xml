@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 操作商品表 -->
+<mapper namespace="dao.ImageMapper">  
+  <resultMap type="pojo.Image" id="image">
+	<id property="id" column="id"/>
+	<result property="productId" column="product_id"/>
+	<result property="mainImg" column="main_img"/>
+	<result property="otherImg" column="other_img"/>
+  </resultMap>
+  
+  <select id="findImgByProductId"  parameterType="Integer" resultMap="image">
+  		select *from image  where image.product_id = #{productId}   
+  </select>
+  
+  <insert id="insertImg" parameterType="pojo.Image">
+  		insert into image(product_id, main_img, other_img) 
+  		values(#{productId}, #{mainImg}, #{otherImg})
+  </insert>
+  
+  <update id="updateImgByProductId" parameterType="pojo.Image">
+  		update image set main_img = #{mainImg}, other_img = #{otherImg} where product_id = #{productId}
+  </update>
+  
+  <delete id="deleteImgByProductId" parameterType="Integer">
+  		delete from image where product_id = #{productId}
+  </delete>
+</mapper>

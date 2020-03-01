@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- META DATA -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Free Responsive Html5 Templates">
+    <meta name="author" content="">
+
+    <title>OpenHouse - Houses for Rent</title>
+    <meta name="keywords" content="Solar Panel, Solar Charger, Solar Panel Charger, ETFE Solar Panel, 5W Solar Panel, 5W Solar Charger">
+    <meta name="description" content="ETFE 5W 5V SOLAR PANEL CHARGER 5521PLUG">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css"  type="text/css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/lightbox.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="font-awesome-4.4.0/css/font-awesome.min.css"  type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Asap:400,700' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        /*面包屑*/
+        #Breadcrumbs{
+            margin-top: 100px;
+            width: 100%;
+        }
+        /*商品页面左边内容*/
+        .content-left{
+            float: left;
+            margin-left: 0;
+            width: 50%;
+            height: 600px;
+        }
+        /*主图片区域*/
+        .content-left .main-img{
+            margin: 30px auto;
+            width: 500px;
+            height: 500px;
+        }
+        /*主图片*/
+        .content-left .main-img img{
+            display: block;
+            width: 500px;
+            height: 500px;
+            border-style: groove;
+            border-width: 1px;
+        }
+        /*其他图片区域*/
+        .content-left .other-img{
+
+        }
+        .content-left  .other-img ul{
+            margin-left: 15%;
+        }
+        .content-left .other-img ul li{
+            list-style-type: none;
+            float: left;
+            width: 100px;
+            height: 100px;
+        }
+        .content-left .other-img ul li img{
+            display: block;
+            margin: 8px auto;
+            width: 80px;
+            height:  80px;
+            border-style: solid;
+            border-width: 3px;
+            border-color: snow;
+        }
+        /*商品右边内容*/
+        .content-right{
+            float: right;
+            margin-left: 0;
+            width:48%;
+        }
+        /*内容框*/
+        .content-right .context{
+            border-width: 1px;
+            border-style: ridge;
+            border-color: snow;
+            margin-left:50px;
+            margin-top: 50px;
+            width:70%;
+            font-size: 20px;
+        }
+        /*商品名*/
+        .content-right .context h5{
+            background-color: #F5F5F5;
+        }
+        /*表格规格设置*/
+        .content-right .context .td1{
+            width: 300px;
+            height: 45px;
+        }
+        .content-right .context .td2{
+            color: black;
+        }
+        .content-right .context table input{
+            height: 40px;
+            width: 510px;
+            background-color: orangered;
+            color: white;
+        }
+        /*富文本详细产品描述*/
+        .detail{
+            clear: both;
+            margin-top: 750px;
+            margin-left: 10%;
+
+            border-style: solid;
+        }
+        /* table 样式 */
+        .detail table {
+            border-top: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+        }
+        .detail table td,
+        .detail table th {
+            border-bottom: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            padding: 3px 5px;
+        }
+        .detail table th {
+            border-bottom: 2px solid #ccc;
+            text-align: center;
+        }
+        /*联系模态框*/
+        .contractContent{
+            z-index: 999;
+            position: fixed;
+            width: 900px;
+            height: 500px;
+            display: none;
+            left: 23%;
+            top: 20%;
+            background-color: white;
+        }
+        /*遮罩层*/
+        .maskBox{
+            z-index: 998;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            opacity: 0.6;
+            left:0;
+            top:0;
+            background-color:#000;
+            display:none;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h1 class="navbar-brand page-scroll">
+                    <a href="#page-top">OpenHouse</a>
+                </h1>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="products.html">Product</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="projects.html">project</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="productManage.html">background</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="about.html">About</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+</header>
+    <!--面包屑-->
+    <div id="Breadcrumbs">
+        <div class="container" >
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="index.html">Home</a>
+                        </li>
+                        <li>
+                            <a href="products.html">Products</a>
+                        </li>
+                        <li class="active">
+                            product
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--商品内容-->
+    <div class="content">
+        <!--商品左边内容-->
+        <div class="content-left">
+            <div class="main-img">
+                <!--<img src="images/1.jpg" id="main-img">-->
+            </div>
+            <div class="other-img">
+
+            </div>
+        </div>
+        <!--商品右边内容-->
+        <div class="content-right">
+            <div class="context">
+                <h1 id="name">Name</h1>
+                <h5 id="description">description占两行..........................................................</h5>
+                <br>
+                <table>
+                    <tr>
+                        <td class="td1">leadtime:</td>
+                        <td class="td2"></td>
+                    </tr>
+                    <tr>
+                        <td class="td1">specification:</td>
+                        <td class="td2"></td>
+                    </tr>
+                    <tr>
+                        <td class="td1">warranty:</td>
+                        <td class="td2"></td>
+                    </tr>
+                    <tr>
+                        <td class="td1">reference EXW price:</td>
+                        <td class="td2"></td>
+                    </tr>
+                    <tr>
+                        <td class="td1">MOQ:</td>
+                        <td class="td2"></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                       <td colspan="2"><input type="button" value="contract us" id="contract"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="detail" id="detail">
+        商品详细描述 ，富文本区域————————————————————————————————————
+    </div>
+    <br><br><br>
+    <!--模态框的内容-->
+    <div id="contractContent" class="contractContent">
+        <div class="row" style="text-align: center">
+            <div class="col-md-3 box-item wow fadeInLeft">
+                <h3>Contact Info</h3>
+                <span>contract in qq</span><br> <br>
+                <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2284420486&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2284420486:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a><br><br>
+                <p>JL.Kemacetan timur no.23. block.Q3<br>
+                    Jakarta-Indonesia</p>
+                <p>+6221 888 888 90 <br>
+                    +6221 888 88891</p>
+                <p>info@yourdomain.com</p>
+            </div>
+            <div class="col-md-7 wow fadeInRight">
+                <h3>Contact Form</h3>
+                <form id="ff" name="form1" method="post" action="/project/foreground/customer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control input-lg" name="name" placeholder="Enter name" required="required" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="email" class="form-control input-lg" name="email" id="email" placeholder="Enter email" required="required" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control input-lg" name="company" id="company" placeholder="Company" required="required" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div class="form-group">
+										<textarea name="message" id="message" class="form-control" rows="4" cols="25" required="required"
+                                                  placeholder="Message"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-skin btn-lg page-scroll wow fadeInUp" name="submitcontact" id="submitcontact">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="maskBox" id="maskBox">
+
+    </div>
+</body>
+
+<!-- jQuery -->
+<script type="text/javascript" src="js/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="js/agency.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="js/jquery.easing.min.js"></script>
+<script src="js/classie.js"></script>
+<script src="js/cbpAnimatedHeader.js"></script>
+
+<script src="js/lightbox-plus-jquery.min.js"></script>
+<script type="text/javascript" src="js/wow.min.js"></script>
+<script type="text/javascript" src="js/jquery.isotope.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+
+<!-- carousel -->
+<script src="owl-carousel/owl.carousel.js"></script>
+<script>
+    //获取url参数的方法
+    function getQueryString(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+        if(r!=null)
+            return  unescape(r[2]);
+        return null;
+    }
+    //获取product的id
+    var id = getQueryString("id");
+    //通过id获取商品信息
+    findProductById();
+    function findProductById() {
+        $.ajax({
+            url: "/project/foreground/product/" + id,
+            type: "get",
+            //发送的数据
+            data: "",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (data) {
+                //设置seo
+                setSeo(data);
+                //主图片
+                var mainImg = "<img src='"+data.data.img.mainImg+"' id='main-img'>";
+                $(".main-img").html(mainImg)
+                //其他图片
+                var otherImgList=data.data.img.otherImg.split(",");//把用,隔开的多个图片提取出来
+                var otherImg = "<ul id='otherImg'>" +
+                                    "<li><img src='"+data.data.img.mainImg+"' class='img-default' onclick='transfer(this)' style='border-color: red'></li>";
+                for (var i=0;i<otherImgList.length;i++){
+                    otherImg+=      "<li><img src='"+otherImgList[i]+"' class='img-default' onclick='transfer(this)'></li>";
+                }
+                otherImg+= "</ul>";
+                $(".other-img").html(otherImg);
+                //名字
+                $("#name").html(data.data.name);
+                //简述
+                $("#description").html(data.data.description);
+                //表格参数
+                console.log(data);
+                var td = document.getElementsByClassName("td2");
+                td[0].innerHTML = data.data.leadtime;
+                td[1].innerHTML = data.data.specification;
+                td[2].innerHTML = data.data.warranty;
+                td[3].innerHTML = data.data.price;
+                td[4].innerHTML = data.data.moq;
+                //富文本区域
+                $("#detail").html(data.data.detail);
+            }
+        });
+    }
+</script>
+
+<!--until-->
+<script>
+    //点击切换图片
+    function transfer(e) {
+        //获取src的内容
+       var img = $(e).attr("src");
+        //更改主图片src的内容
+        $("#main-img").attr("src", img);
+        //更改选中状态
+        //获取全部图片
+        var imgList = document.getElementsByClassName("img-default");
+        //把全部图片均设置为未选择状态
+        for(var i =0;i<imgList.length;i++){
+            imgList[i].style.borderColor = "snow";
+        }
+        //把点击的图片设置为选中状态
+        e.style.borderColor = "red";
+    }
+    //Seo设置
+    function setSeo(data) {
+        //更改标题
+        $('title').html(data.data.seoTitle);
+        //更改description和keywords
+        var objs = document.getElementsByTagName("meta");
+        for(var i=0;i<objs.length;i++){
+            if(objs[i].name === 'keywords'){
+                objs[i].content = data.data.seoKey;
+            }
+            if(objs[i].name === 'description'){
+                objs[i].content = data.data.seoDescription;
+            }
+        }
+    }
+    //模态框
+    var contract = document.getElementById("contract");//触发弹出层的按钮
+    var contractContent = document.getElementById("contractContent");//弹出层内容
+    //点击弹出层区域外时，弹出层消失，遮罩层消失
+    document.addEventListener("click",function(){
+        contractContent.style.display = "none";
+        document.getElementById("maskBox").style.display = "none";
+    });
+    //点击按钮触发弹出层,并触发遮罩层
+    contract.addEventListener("click",function(event){
+        contractContent.style.display="block";
+        document.getElementById("maskBox").style.display = "block";
+        event=event||window.event;
+        event.stopPropagation();
+    });
+    //点击弹出层区域内时，弹出层和遮罩层保持不消失
+    contractContent.addEventListener("click",function(event){
+        contractContent.style.display = "block";
+        document.getElementById("maskBox").style.display = "block";
+        event=event||window.event;
+        event.stopPropagation();
+    });
+
+
+
+</script>
+</html>

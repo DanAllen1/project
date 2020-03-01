@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 操作商品表 -->
+<mapper namespace="dao.ProductMapper">  
+  <resultMap type="pojo.Product" id="product">
+	<id property="id" column="id" />
+	<result property="name" column="name"/>
+	<result property="date" column="date"/>
+	<result property="leadtime" column="leadtime"/>
+	<result property="specification" column="specification"/>
+	<result property="warranty" column="warranty"/>
+	<result property="price" column="price"/>
+	<result property="MOQ" column="MOQ"/>
+	<result property="category" column="category"/>
+	<result property="categoryId" column="category_id"/>
+	<result property="description" column="description"/>
+	<result property="detail" column="detail"/>
+	<result property="seoTitle" column="seoTitle"/>
+	<result property="seoKey" column="seoKey"/>
+	<result property="seoDescription" column="seoDescription"/>
+	<association property="img" javaType="pojo.Image">
+		<id property="id" column="id"/>
+		<result property="productId" column="product_id"/>
+		<result property="mainImg" column="main_img"/>
+		<result property="otherImg" column="other_img"/>
+	</association>
+  </resultMap>
+  
+  <select id="findProductById" parameterType="Integer" resultMap="product">
+	 select product.*, image.*
+	 from product,image
+	 where product.id = image.product_id
+	 and   product.id = #{id}
+  </select>
+  <select id="findProductIdByName" parameterType="String" resultType="Integer">
+  	 select id from product where name = #{name}      
+  </select>
+  <select id="findProductByCategory" parameterType="String" resultMap="product">
+  	 select  product.*, image.*
+     from product,image
+     where product.id = image.product_id
+     and  product.category = #{categoryName}       
+  </select>
+  <select id="findAllProduct"  resultMap="product">
+  	 select  product.*, image.*
+     from product,image
+     where product.id=image.product_id       
+  </select>
+  <select id="findProductBySearchContent" parameterType="String" resultMap="product">
+	 <bind name="content" value="'%'+searchContent+'%'"/>
+  	 select  product.*, image.*
+     from product,image
+     where product.id=image.product_id
+     and product.name like  #{content}
+  </select>
+  <select id="findProductQuantity"  resultType="Integer">
+	 select  count(*)from product
+  </select>
+  
+  <insert id="insertProduct"  parameterType="pojo.Product">
+  	 insert into product
+  	 (name, date, leadtime, specification, warranty, price, MOQ, category, category_id, description, detail, seoTitle, seoKey, seoDescription) 
+  	 values(#{name}, #{date}, #{leadtime}, #{specification}, #{warranty}, #{price}, #{MOQ}, #{category}, #{categoryId}, #{description}, #{detail}, #{seoTitle}, #{seoKey}, #{seoDescription})
+  </insert>
+  
+  <update id="updateProductById" parameterType="pojo.Product">
+  	 update product 
+  	 set name = #{name}, date = #{date}, 
+  	 	 leadtime = #{leadtime}, specification = #{specification},
+  	 	 warranty = #{warranty}, price = #{price},
+  	 	 MOQ = #{MOQ},	category = #{category},
+  	 	 description = #{description}, detail = #{detail},
+  	 	 seoTitle = #{seoTitle}, seoKey = #{seoKey}, seoDescription = #{seoDescription}
+  	 where id = #{id} 
+  </update>
+  <update id="updateCategoryByCategoryId" parameterType="pojo.Product" >
+  	 update product 
+  	 set category = #{category}
+  	 where category_id = #{categoryId}
+  </update>
+  
+  <delete id="deleteProductById" parameterType="Integer">
+  	 delete from product where id = #{id}
+  </delete>
+	<delete id="deleteProductsByCategoryId" parameterType="Integer">
+  	 delete from product where category_id = #{categoryId}
+  </delete>
+</mapper>
