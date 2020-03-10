@@ -1,6 +1,7 @@
 package demo;
 
 
+import common.Const;
 import dao.*;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -8,18 +9,19 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import common.ServerResponse;
 import pojo.*;
+import redis.clients.jedis.Jedis;
 import service.CategoryService;
 import service.ProductService;
 import service.ProjectService;
 import service.ViewService;
 import serviceImpl.ProductServiceImpl;
+import until.EmailUntil;
 import until.ImgTransformToString;
 import until.TimeUntil;
 import until.TimerViewTask;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Timer;
+import javax.mail.MessagingException;
+import java.util.*;
 
 
 public class Demo {
@@ -27,8 +29,9 @@ public class Demo {
 	private int a = 1;
 	private TimeUntil timeUntil = new TimeUntil();
 	private TimerViewTask timerViewTask = new TimerViewTask();
+	EmailUntil emailUntil = new EmailUntil();
 	@Test
-	public void demo() {
+	public void demo() throws MessagingException {
 		ApplicationContext act=new ClassPathXmlApplicationContext("applicationContext.xml");
 		ImageMapper imgMapper =  act.getBean(ImageMapper.class);
 		ProductMapper productMapper = act.getBean(ProductMapper.class);
@@ -39,8 +42,15 @@ public class Demo {
 		CategoryMapper categoryMapper= act.getBean(CategoryMapper.class);
 		ViewMapper viewMapper = act.getBean(ViewMapper.class);
 		ViewService viewService =act.getBean(ViewService.class);
-		System.out.println(projectMapper.updateProjectById(new Project()));
-		System.out.println(productMapper.findProductQuantity());
+		UserMapper userMapper = act.getBean(UserMapper.class);
+		Email email = new Email();
+		email.setContent("666");
+		email.setSubject("233");
+		List<String> a = new ArrayList<>();
+		a.add("2609111296@qq.com");
+		a.add("2284420486@qq.com");
+		email.setRecipients(a);
+		System.out.println(emailUntil.emailPost(email));
 	}
 	@Test
 	public void demo2() {
@@ -56,4 +66,17 @@ public class Demo {
 		/*timerViewTask.cancel();*/
 	}
 
+	@Test
+	public void demo3(){
+		String host = "localhost";
+		int port = 6379;
+		Jedis jedis = new Jedis(host,port);
+
+		jedis.set("name","钟房桂");
+		System.out.println(jedis.get("name"));
+		jedis.hset("student","name","cn");
+		jedis.hset("student","date","11.26");
+		System.out.println(jedis.hgetAll("student"));
+		System.out.println(jedis.exists("student"));
+	}
 }

@@ -1,11 +1,14 @@
 package controller.background;
 
+import common.Const;
 import common.ServerResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.*;
 import pojo.Customer;
 import service.CustomerService;
+
+import javax.mail.MessagingException;
 
 @RestController
 @RequestMapping("/background")
@@ -28,6 +31,11 @@ public class CustomerManageController {
     @DeleteMapping("/customer/{id}")
     public ServerResponse deleteCustomerById(@PathVariable Integer id){
         return customerService.deleteCustomerById(id);
+    }
+    //给订阅的顾客发邮件
+    @PostMapping("/customer/email")
+    public ServerResponse postMailTOMarkingCustomer() throws MessagingException {
+        return customerService.postMailToMarkingCustomer();
     }
     //获取顾客数量
     @GetMapping("/customers/quantity")

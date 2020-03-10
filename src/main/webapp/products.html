@@ -154,10 +154,10 @@
 					<div class="col-footer col-md-4">
 						<h2 class="footer-title">NEWS LETTER</h2>
 						If you want to receive our latest news send directly to your email, please leave your email address bellow. Subscription is free and you can cancel anytime.
-						<form action="#" method="post">
-							<input type="text" name="your-name" value="" size="40" placeholder="Your Email" />
-							<input type="submit" value="SUBSCRIBE" class="btn btn-3" />
-						</form>
+						<div>
+							<input type="text" name="your-name" id="email" value="" size="40" placeholder="Your Email" required/>
+							<input type="submit" value="SUBSCRIBE" class="btn btn-3" onclick="subscribe()"/>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -349,7 +349,41 @@
         function showPaging() {
             $("#paging").css('visibility','visible');
         }
+		//订阅功能
+		function subscribe() {
+			var email = jQuery.trim($("#email").val());
+			//先检查邮件格式对不对，不对就提醒客户
+			if (!checkEmail(email)){
+				alert("请输入正确的邮箱格式");
+				return;
+			}
+			$.ajax({
+				url: "/project/foreground/customer/mark",
+				type: "put",
+				//发送的数据
+				data: JSON.stringify({email:email,mark:1}),
+				contentType: "application/json;charset=UTF-8",
+				dataType: "json",
+				success: function (data) {
+					if (data.status == 1){
+						alert("订阅成功");
+					}
+					else {
+						alert(data.msg);
+					}
+				}
+			})
+		}
+		//检查邮箱格式对不对
+		function checkEmail(email) {
+			var myReg = /^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
 
+			if (myReg.test(email)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	</script>
 </body>
 </html>

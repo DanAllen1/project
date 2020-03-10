@@ -171,7 +171,13 @@
     	<artifactId>mail</artifactId>
     	<version>1.4.7</version>
 	</dependency>
-	
+	<!--redis-->
+	<dependency>
+		<groupId>redis.clients</groupId>
+		<artifactId>jedis</artifactId>
+		<version>2.9.0</version>
+	</dependency>
+
 </dependencies>
 
 </project>

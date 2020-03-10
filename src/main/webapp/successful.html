@@ -31,6 +31,9 @@
         var operate = getQueryString("operate");
         window.onload = function () {         
             $("#operate").html(operate+"成功");
+            if (operate == "addProduct" || operate == "addProject"){
+                postMailToFollower();
+            }
         };
         //倒计时和5秒后返回主页
         var i = 0;
@@ -49,12 +52,27 @@
         		$("#countdown").html('<a href="productManage.html">'+'还有'+countdown+'自动返回主页</a>');
                 countdown--;
                 i++;
-                if (i>5){
+                if (i>4){
                     window.clearInterval(stopUntil);
                     window.location.href = "productManage.html";
                 }
         	}          
         },1000);
+
+
+        //把邮件发送给订阅者
+        function postMailToFollower() {
+            $.ajax({
+                url: "/project/background/customer/email",
+                type: "post",
+                data: "",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (data) {
+                    alert("已经把邮件发给订阅者")
+                }
+            })
+        }
     </script>
 </body>
 </html>

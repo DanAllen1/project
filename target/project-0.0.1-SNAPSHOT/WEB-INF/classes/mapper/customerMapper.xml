@@ -13,13 +13,29 @@
     <select id="findCustomersQuantity" resultType="Integer">
         select count(*)from customer
     </select>
+    <select id="findEmailByMark" parameterType="Integer" resultType="String">
+        select  distinct email from customer where mark = #{mark}
+    </select>
+    <select id="findCustomersByEmail" parameterType="String" resultType="pojo.Customer">
+        select *from customer where  email = #{email}
+    </select>
+    <select id="findMarkByEmail" parameterType="String" resultType="Integer">
+        select distinct mark from customer where email = #{email}
+    </select>
 
     <insert id="insertCustomer" parameterType="pojo.Customer">
-        insert into customer (name, email, company, message, date)
-        values(#{name}, #{email}, #{company}, #{message}, #{date})
+        insert into customer (name, email, company, message, date, mark)
+        values(#{name}, #{email}, #{company}, #{message}, #{date}, #{mark})
     </insert>
+
+    <update id="updateMarkByEmail" parameterType="pojo.Customer">
+        update customer set mark = #{mark} where email = #{email}
+    </update>
 
     <delete id="deleteCustomerById" parameterType="Integer">
         delete from customer where id = #{id}
+    </delete>
+    <delete id="deleteCustomerByEmail" parameterType="String">
+        delete from  customer where email =#{email}
     </delete>
 </mapper>

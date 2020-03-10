@@ -297,10 +297,12 @@
             </div>
             <div class="col-md-7 wow fadeInRight">
                 <h3>Contact Form</h3>
-                <form id="ff" name="form1" method="post" action="/project/foreground/customer">
+                <form id="ff" name="form1" method="post" action="/project/foreground/customer" onsubmit="return customerFollow()">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
+                               <!-- 传递隐藏的参数：订阅状态-->
+                                <input type="hidden" name="mark" id="mark" value=""/>
                                 <input type="text" class="form-control input-lg" name="name" placeholder="Enter name" required="required" />
                             </div>
                         </div>
@@ -465,7 +467,19 @@
         event=event||window.event;
         event.stopPropagation();
     });
-
+    //在客户contact us 提交时询问是否同时订阅本网站
+    function customerFollow() {
+        var mark = document.getElementById("mark");
+        if (confirm("是否同时订阅本网站内容(如果订阅的话，有新产品或project发布会把新产品和文章第一时间发送到你的邮箱去)")){
+            mark.value = 1;
+            alert("订阅成功");
+        }
+        else {
+            alert("以后如需订阅，可在主页底部输入你的邮箱来订阅本网站");
+            mark.value = 0;
+        }
+        return true;
+    }
 
 
 </script>

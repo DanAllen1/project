@@ -1,5 +1,6 @@
 package controller.foreground;
 
+import common.Const;
 import common.ServerResponse;
 
 import javax.mail.MessagingException;
@@ -8,9 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ibatis.annotations.Insert;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pojo.Customer;
 import service.CustomerService;
 
@@ -37,5 +36,14 @@ public class CustomerController {
             response.sendRedirect("/project/fault.html");
         }
         return serverResponse;
+    }
+    //订阅和取订功能
+    @PutMapping("/customer/mark")
+    public ServerResponse updateMarkByEmail(@RequestBody Customer customer) throws MessagingException {
+        System.out.println(customer);
+        if (customer.getEmail() == null || customer.getEmail() == ""){
+            return  ServerResponse.createByErrorMessage("邮件不能为空");
+        }
+        return customerService.updateMarkByEmail(customer);
     }
 }

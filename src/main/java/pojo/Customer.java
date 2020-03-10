@@ -8,6 +8,7 @@ public class Customer {
     private String company;
     private String message;
     private String date;
+    private Integer mark;
 
     public Integer getId() {
         return id;
@@ -57,6 +58,14 @@ public class Customer {
         this.date = date;
     }
 
+    public Integer getMark() {
+        return mark;
+    }
+
+    public void setMark(Integer mark) {
+        this.mark = mark;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -66,6 +75,7 @@ public class Customer {
                 ", company='" + company + '\'' +
                 ", message='" + message + '\'' +
                 ", date='" + date + '\'' +
+                ", mark=" + mark +
                 '}';
     }
 }

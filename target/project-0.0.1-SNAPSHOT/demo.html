@@ -16,15 +16,24 @@
     </style>
 </head>
 <body>
-    <div style="width: 200px;height: 200px;background-color: #007bff">
-    </div>
-    <img src="images/1.jpg" style="width: 100%">
-    <script>
-        var i ;
-        i=2;
-        alert(i);
-
-
-    </script>
+       <input type="submit" value="提交" id="submit">
 </body>
+    <script>
+        $("#submit").click(function () {
+            $.ajax({
+                url: "/project/background/customer/mark",
+                type: "put",
+                //发送的数据
+                data: JSON.stringify({email:"1109118049@QQ.COM"}),
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        })
+    </script>
+<script>
+
+</script>
 </html>

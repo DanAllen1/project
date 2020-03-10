@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import common.ServerResponse;
-import common.UserDemo;
-import dao.UserMapper;
+import common.UserRole;
 import pojo.User;
-import service.ProjectService;
 import service.UserService;
 import until.EmailUntil;
 
@@ -45,11 +43,11 @@ public class UserController {
 	@PostMapping("/user/checkNum")
 	public ServerResponse getCheckNumByEmail(@RequestBody User user,HttpSession session) throws MessagingException {
 		String email = user.getEmail();
-		 
 		 if(userService.checkEmail(user).getStatus()==1) {
 			//生成一个1-1000随机数,并存进session中
 			int checkNum = (int)(Math.random()*1000);
 			session.setAttribute("checkNum", checkNum);
+			session.setAttribute("email",email);
 			//把验证码发给要找回密码的邮箱
 			emailUntil.emailPost(email, checkNum);
 			return ServerResponse.createBySuccessMessage("已发送到qq邮箱，请注意查收");
@@ -63,10 +61,8 @@ public class UserController {
 	@GetMapping("/user/checkNum/{checkNum}")
 	public ServerResponse checkNum(@PathVariable Integer checkNum, HttpSession session) {
 		if((int)checkNum == (int)session.getAttribute("checkNum")) {
-			User user = new User();
-			user.setName(UserDemo.name);
-			user.setPassword(UserDemo.password);
-			return ServerResponse.createBySuccess(user);
+			String email = (String) session.getAttribute("email");
+			return userService.retrieveUserByEmail(email);
 		}
 		else {
 			return ServerResponse.createByErrorMessage("验证码错误");

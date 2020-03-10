@@ -14,5 +14,8 @@
   <select id="findAllUsers" resultType="pojo.User">
   		select *from user 
   </select>
+    <select id="findUserByEmail" parameterType="String" resultType="pojo.User">
+  		select *from user where email = #{email}
+  </select>
   
 </mapper>

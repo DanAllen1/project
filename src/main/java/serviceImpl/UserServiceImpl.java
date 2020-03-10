@@ -38,4 +38,14 @@ public class UserServiceImpl implements UserService {
 		return ServerResponse.createByError();
 	}
 
+	//找回用户账号密码
+	public  ServerResponse retrieveUserByEmail(String email){
+		User user = userMapper.findUserByEmail(email);
+		if (user!=null){
+			return ServerResponse.createBySuccess(user);
+		}
+		else
+			return ServerResponse.createByErrorMessage("");
+	}
+
 }
