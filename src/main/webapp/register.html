@@ -47,16 +47,28 @@
                 <div class="content">
                   <form class="form-validate">
                     <div class="form-group">
+                      <input id="register-username" type="text" name="registerUsername" required data-msg="Please enter your username" class="input-material">
+                      <label for="register-username" class="label-material">User Name</label>
+                    </div>
+                    <div class="form-group">
                       <input id="register-email" type="email" name="registerEmail" required data-msg="Please enter a valid email address" class="input-material">
                       <label for="register-email" class="label-material">Email Address      </label>
-                      <button onclick="getCheckNum()" class="btn btn-primary">获取验证码</button>
+                    </div>
+                    <div class="form-group">
+                      <input id="register-password" type="password" name="registerPassword" required data-msg="Please enter your password" class="input-material">
+                      <label for="register-password" class="label-material">password        </label>
                     </div>
                     <div class="form-group">
                       <input id="checkNum" type="text" name="checkNum" required data-msg="Please enter your password" class="input-material">
                       <label for="checkNum" class="label-material">验证码        </label>
+                      <button id="getCheckNum" class="btn btn-primary">获取验证码</button>
+                    </div>
+                    <div class="form-group terms-conditions">
+                      <input id="register-agree" name="registerAgree" type="checkbox" required value="1" data-msg="Your agreement is required" class="checkbox-template">
+                      <label for="register-agree">Agree the terms and policy</label>
                     </div>
                     <div class="form-group">
-                      <button  onclick="check()"  class="btn btn-primary">找回账号密码</button>
+                      <button id="register" type="button" name="registerSubmit" class="btn btn-primary">Register</button>
                     </div>
                   </form><small>Already have an account? </small><a href="login.html" class="signup">Login</a>
                 </div>
@@ -78,48 +90,78 @@
     <script src="vendor/jquery-validation/jquery.validate.min.js"></script>
     <!-- Main File-->
     <script src="js/front.js"></script>
+
     <script>
-    	//获取验证码
-        function getCheckNum() {
-          var email = document.getElementById("register-email").value;
-          $.ajax({
-            url: "/project/background/user/retrieveCheckNum",
-            type: "post",
-            //发送的数据
-            data :JSON.stringify({email:email}),
-            contentType: "application/json;charset=UTF-8",
-            dataType: "json",
-            success: function (data) {
-              if(data.status ==1){
-                alert(data.msg);
-              }
-              else{
-                alert(data.msg);
-              }
+      //检查用户名是否重复
+      var checkUsernameResult = false;
+      document.getElementById("register-username").addEventListener("change", function () {
+        var name = $("#register-username").val();
+        $.ajax({
+          url: "/project/background/user/name/"+name,
+          type: "get",
+          data: "",
+          contentType: "application/json;charset=UTF-8",
+          dataType: "json",
+          success: function (data) {
+            if (data.status == 1){
+              checkUsernameResult = true;
+              document.getElementById("register-username").className = "input-material";
             }
-          });
-        }
-    	//检查验证码是否正确
-        function  check() {
-          var email = document.getElementById("register-email").value;
-          var checkNum = document.getElementById("checkNum").value;
-          $.ajax({
-            url: "/project/background/user/checkNum/"+checkNum+"/email/"+email,
-            type: "get",
-            //发送的数据
-            data: "",
-            contentType: "application/json;charset=UTF-8",
-            dataType: "json",
-            success: function (data) {
-              if(data.status == 1){
-                alert("成功找回，你的账号为"+data.data.name+"你的密码为"+data.data.password);
-              }
-              else{
-                alert(data.msg);
-              }
+            else {
+              alert(data.msg);
+              checkUsernameResult = false;
+              document.getElementById("register-username").className = "input-material is-invalid";
             }
-          });
-        }
+          }
+        });
+      });
+      //获取验证码
+       $("#getCheckNum").click(function () {
+         var email = $("#register-email").val();
+         $.ajax({
+           url: "/project/background/user/registerCheckNum",
+           type: "post",
+           data: JSON.stringify({email:email}),
+           contentType: "application/json;charset=UTF-8",
+           dataType: "json",
+           success: function (data) {
+             if (data.status == 1){
+               alert("获取成功，请往邮箱查看");
+             }
+             else {
+               alert("获取失败");
+             }
+           }
+         });
+       })
+      //注册
+       $("#register").click(function () {
+         //如果用户名重复，中断注册操作，并提醒用户
+         if (!checkUsernameResult){
+           alert("用户名重复");
+           return;
+         }
+         var checkNum = $("#checkNum").val();
+         var email = $("#register-email").val();
+         var name = $("#register-username").val();
+         var password = $("#register-password").val();
+         $.ajax({
+           url: "/project/background/user?checkNum="+checkNum,
+           type: "post",
+           data: JSON.stringify({name:name,password:password,email:email}),
+           contentType: "application/json;charset=UTF-8",
+           dataType: "json",
+           success: function (data) {
+             if (data.status == 1){
+               alert("已经向管理员提交申请，请等待管理员的同意");
+             }
+             else {
+               alert("验证码错误");
+             }
+           }
+         })
+
+       })
     </script>
   </body>
 </html>

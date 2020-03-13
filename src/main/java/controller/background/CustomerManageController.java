@@ -6,9 +6,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.*;
 import pojo.Customer;
+import pojo.Product;
+import pojo.Project;
 import service.CustomerService;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/background")
@@ -34,8 +37,23 @@ public class CustomerManageController {
     }
     //给订阅的顾客发邮件
     @PostMapping("/customer/email")
-    public ServerResponse postMailTOMarkingCustomer() throws MessagingException {
-        return customerService.postMailToMarkingCustomer();
+    public ServerResponse postMailTOMarkingCustomer(HttpSession session) throws MessagingException {
+       Project project = (Project) session.getAttribute("latestProject");
+        //如果发表的是商品
+        if (project != null){
+            //移去session中的这个属性
+            session.removeAttribute("latestProject");
+            return customerService.postMailToMarkingCustomer(project);
+        }
+        //如果发布的是文章
+        Product product = (Product) session.getAttribute("latestProduct");
+        if (product != null){
+            //移去session中的这个属性
+            session.removeAttribute("latestProduct");
+            return customerService.postMailToMarkingCustomer(product);
+        }
+        return ServerResponse.createByErrorMessage("没有新产品或文章发布");
+
     }
     //获取顾客数量
     @GetMapping("/customers/quantity")

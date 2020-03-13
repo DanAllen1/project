@@ -4,13 +4,16 @@ import javax.mail.MessagingException;
 
 import common.ServerResponse;
 import pojo.Customer;
+import pojo.Product;
+import pojo.Project;
 
 public interface CustomerService {
 
     public ServerResponse findAllCustomer();
     public ServerResponse findCustomerById(Integer id);
     public ServerResponse findAllCustomersQuantity();
-    public ServerResponse postMailToMarkingCustomer() throws MessagingException;
+    public ServerResponse postMailToMarkingCustomer(Product product) throws MessagingException;
+    public ServerResponse postMailToMarkingCustomer(Project project) throws MessagingException;
 
     public ServerResponse insertCustomer(Customer customer) throws MessagingException;
 

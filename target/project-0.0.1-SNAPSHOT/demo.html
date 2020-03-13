@@ -16,24 +16,16 @@
     </style>
 </head>
 <body>
-       <input type="submit" value="提交" id="submit">
+        <div id="demo">
+        5555
+        </div>
 </body>
-    <script>
-        $("#submit").click(function () {
-            $.ajax({
-                url: "/project/background/customer/mark",
-                type: "put",
-                //发送的数据
-                data: JSON.stringify({email:"1109118049@QQ.COM"}),
-                contentType: "application/json;charset=UTF-8",
-                dataType: "json",
-                success: function (data) {
-                    console.log(data);
-                }
-            })
-        })
-    </script>
 <script>
-
+        f();
+        function f() {
+            $('#demo').click(function () {
+                alert("666")
+            })
+        }
 </script>
 </html>

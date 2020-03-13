@@ -41,6 +41,8 @@ public class ProjectManageController {
 		project.setWriter(user.getName());
 		serverResponse = projectService.insertProject(project, imgs);
 		if (serverResponse.getStatus() == 1){
+			//文章发表成功的话把文章存进session，以供订阅功能使用
+			session.setAttribute("latestProject",serverResponse.getData());
 			//成功则重定向到成功页面
 			response.sendRedirect("/project/successful.html?operate=addProject");
 		}

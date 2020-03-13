@@ -5,17 +5,38 @@
   
 <!-- User表 -->
 <mapper namespace="dao.UserMapper">  
-  <select id="findUserById" parameterType="Integer" resultType="pojo.User">
+    <select id="findUserById" parameterType="Integer" resultType="pojo.User">
   		select *from user where id = #{id};
-  </select>
-   <select id="findUserByName" parameterType="String" resultType="pojo.User">
+    </select>
+    <select id="findUserByName" parameterType="String" resultType="pojo.User">
   		select *from user where name = #{name}
-  </select>
-  <select id="findAllUsers" resultType="pojo.User">
+    </select>
+    <select id="findAllUsers" resultType="pojo.User">
   		select *from user 
-  </select>
+    </select>
+    <select id="findAllUsersExcludeRole" parameterType="Integer" resultType="pojo.User">
+  		select *from user where role != #{role}
+    </select>
     <select id="findUserByEmail" parameterType="String" resultType="pojo.User">
   		select *from user where email = #{email}
-  </select>
-  
+    </select>
+    <select id="findUserByRole" parameterType="Integer" resultType="pojo.User">
+        select *from user where role = #{role}
+    </select>
+
+    <insert id="insertUser" parameterType="pojo.User">
+        insert into user(name ,password, email, role, createTime)
+        values (#{name}, #{password}, #{email}, #{role}, #{createTime})
+    </insert>
+
+    <update id="updateUserRoleById" parameterType="pojo.User">
+        update user set role = #{role} where id = #{id}
+    </update>
+    <update id="updateUserPasswordById" parameterType="pojo.User">
+        update user set password = #{password} where id = #{id}
+    </update>
+
+    <delete id="deleteUserById" parameterType="Integer">
+        delete from user where id = #{id}
+    </delete>
 </mapper>

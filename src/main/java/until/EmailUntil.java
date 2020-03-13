@@ -161,7 +161,7 @@ public class EmailUntil {
         InternetAddress form = new InternetAddress(
                 props.getProperty("mail.user"));
         message.setFrom(form);
-        //判断收件人是多个还是一个
+        //收件人只有一个时
 		if (email.getRecipient() != null){
 			//收件人地址
 			Address addressReceived = new InternetAddress(email.getRecipient());

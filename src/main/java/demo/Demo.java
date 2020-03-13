@@ -43,14 +43,9 @@ public class Demo {
 		ViewMapper viewMapper = act.getBean(ViewMapper.class);
 		ViewService viewService =act.getBean(ViewService.class);
 		UserMapper userMapper = act.getBean(UserMapper.class);
-		Email email = new Email();
-		email.setContent("666");
-		email.setSubject("233");
-		List<String> a = new ArrayList<>();
-		a.add("2609111296@qq.com");
-		a.add("2284420486@qq.com");
-		email.setRecipients(a);
-		System.out.println(emailUntil.emailPost(email));
+		Integer a;
+		a=2;
+		System.out.println(a);
 	}
 	@Test
 	public void demo2() {

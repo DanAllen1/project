@@ -127,7 +127,8 @@ public class ProductServiceImpl implements ProductService{
 		int status2 = imgMapper.insertImg(img);
 		//若插入成功，服务器返回成功状态码
 		if(status2>0) {
-			return ServerResponse.createBySuccess();
+			//返回一个最新商品数据给订阅功能使用
+			return ServerResponse.createBySuccess(productMapper.findProductById(productId));
 		}
 		//否则返回失败
 		return ServerResponse.createByError();

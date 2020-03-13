@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 public class DeleteFile {
 
 	String dirPath = "C:/Tomcat/apache-tomcat-9.0.20/webapps";
-	  //多张图片的删除
 
+	//多张图片删除
 	public boolean deleteImg(List<String> imgList) {
 		//获取该目录下的所有文件名
 		for (String img : imgList){

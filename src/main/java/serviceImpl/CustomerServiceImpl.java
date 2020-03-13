@@ -3,10 +3,15 @@ package serviceImpl;
 import common.Const;
 import common.ServerResponse;
 import dao.CustomerMapper;
+import dao.ProductMapper;
+import dao.ProjectMapper;
+import oracle.jrockit.jfr.openmbean.ProducerDescriptorType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pojo.Customer;
 import pojo.Email;
+import pojo.Product;
+import pojo.Project;
 import service.CustomerService;
 import until.EmailUntil;
 
@@ -19,6 +24,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerMapper customerMapper;
+    @Autowired
+    private ProductMapper productMapper;
+    @Autowired
+    private ProjectMapper projectMapper;
     private EmailUntil emailUntil = new EmailUntil();
 
     public ServerResponse findAllCustomer() {
@@ -37,25 +46,58 @@ public class CustomerServiceImpl implements CustomerService {
         return ServerResponse.createBySuccess(customerMapper.findCustomersQuantity());
     }
 
-    //给订阅的用户发送邮件
-    public ServerResponse postMailToMarkingCustomer() throws MessagingException {
-        List<String> emailList = customerMapper.findEmailByMark(Const.CustomerMark.MARK);
-        if (emailList != null){
-            emailUntil.emailPost(emailList);
+   //给订阅的用户发邮件 发布商品时
+    public ServerResponse postMailToMarkingCustomer(Product product) throws MessagingException {
+        Email email = new Email();
+        email.setSubject("有新的商品发布了");
+        email.setContent("产品名:"+product.getName()+"<br>"+
+                         "产品简述:"+product.getDescription()+"<br>"+
+                         "<img src='http://123.57.242.246:8080"+product.getImg().getMainImg()+"'>"+"<br>"+
+                         "具体请看<a href='http://123.57.242.246:8080/project/product.html?id="+product.getId()+"'>");
+        //搜索出已经订阅过的用户
+        List<String> emailList= customerMapper.findEmailByMark(Const.CustomerMark.MARK);
+        email.setRecipients(emailList);
+        //发送邮件
+        ServerResponse serverResponse = emailUntil.emailPost(email);
+        if (serverResponse.getStatus() == 1){
+            return ServerResponse.createBySuccess();
         }
-        return ServerResponse.createBySuccess();
+        return ServerResponse.createByErrorMessage("发送失败");
+    }
+
+    //给订阅的用户发邮件 发布文章时
+    @Override
+    public ServerResponse postMailToMarkingCustomer(Project project) throws MessagingException {
+        Email email = new Email();
+        email.setSubject("有新的文章发布了");
+        email.setContent("文章标题:"+project.getTitle()+"<br>"+
+                        "文章简述:"+project.getDescription()+"<br>"+
+                        "<img src='http://123.57.242.246:8080"+project.getImg()+"'>"+"<br>"+
+                        "具体请看<a href='http://123.57.242.246:8080/project/project.html?id="+project.getId()+"'>详细情况</a>");
+        //搜索出已经订阅过的用户
+        List<String> emailList= customerMapper.findEmailByMark(Const.CustomerMark.MARK);
+        email.setRecipients(emailList);
+        //发送邮件
+        ServerResponse serverResponse = emailUntil.emailPost(email);
+        if (serverResponse.getStatus() == 1){
+            return ServerResponse.createBySuccess();
+        }
+        return ServerResponse.createByErrorMessage("发送失败");
     }
 
     //存储客户信息
     public ServerResponse insertCustomer(Customer customer) throws MessagingException {
+        Integer originalMark = null;
         //先查询该邮箱是否已经存在数据库
         if (customerMapper.findCustomersByEmail(customer.getEmail()).size() != 0){
+            //获取以前的订阅状态
+            originalMark = customerMapper.findMarkByEmail(customer.getEmail());
             //如果存在，把数据库内该邮箱的记录的订阅状态更新一下
             customerMapper.updateMarkByEmail(customer);
         }
         //把客户信息存进数据库
     	int status = customerMapper.insertCustomer(customer);
-        if(status!=0){
+        if(status!=0 && customer.getMark() == Const.CustomerMark.MARK && originalMark == Const.CustomerMark.NO_MARK){
         	//异步把客户信息通过邮件发送给管理员
             Runnable runnable =new Runnable() {
                 @Override

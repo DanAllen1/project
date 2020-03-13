@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.UploadPath;
 import org.springframework.context.ApplicationContext;
@@ -30,7 +31,7 @@ public class ProductManageController {
 	
 	//添加商品
 	@PostMapping("/product")
-	public ServerResponse addProduct(Product product, HttpServletResponse response,
+	public ServerResponse addProduct(Product product, HttpServletResponse response, HttpSession session,
 			@RequestParam("imgs")List<MultipartFile> imgs) throws IOException {
 		ServerResponse serverResponse;
 		if (imgs.isEmpty() && imgs.size() <= 0){
@@ -40,6 +41,8 @@ public class ProductManageController {
 		//判断service层处理是否成功
 		serverResponse = productService.InsertProduct(product, imgs);
 		if (serverResponse.getStatus() == 1){
+			//如果成功的话先把商品存进session，供发邮件使用
+			session.setAttribute("latestProduct",serverResponse.getData());
 			//成功则重定向到成功页面
 			response.sendRedirect("/project/successful.html?operate=addProduct");
 		}

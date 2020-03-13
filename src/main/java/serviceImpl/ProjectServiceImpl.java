@@ -59,7 +59,8 @@ public class ProjectServiceImpl implements ProjectService {
 				//把文章存进数据库
 				project.setImg("/img/"+originalFilename);
 				projectMapper.insertProject(project);
-				return ServerResponse.createBySuccess();
+				//返回一个最新文章给订阅功能使用
+				return ServerResponse.createBySuccess(projectMapper.findProjectByTitle(project.getTitle()));
 			} catch (Exception e) {
 				return ServerResponse.createByError();
 			}
