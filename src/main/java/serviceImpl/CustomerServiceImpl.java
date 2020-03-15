@@ -53,8 +53,8 @@ public class CustomerServiceImpl implements CustomerService {
         email.setContent("产品名:"+product.getName()+"<br>"+
                          "产品简述:"+product.getDescription()+"<br>"+
                          "<img src='http://123.57.242.246:8080"+product.getImg().getMainImg()+"'>"+"<br>"+
-                         "具体请看<a href='http://123.57.242.246:8080/project/product.html?id="+product.getId()+"'>"+
-                         "<a href='http://123.57.242.246:8080/project/unsubscribe.html>退订</a>");
+                         "具体请看<a href='http://123.57.242.246:8080/project/product.html?id="+product.getId()+"'>"+"<br>"+
+                         "<a href='http://123.57.242.246:8080/project/unsubscribe.html'>退订</a>");
         //搜索出已经订阅过的用户
         List<String> emailList= customerMapper.findEmailByMark(Const.CustomerMark.MARK);
         email.setRecipients(emailList);
@@ -74,8 +74,8 @@ public class CustomerServiceImpl implements CustomerService {
         email.setContent("文章标题:"+project.getTitle()+"<br>"+
                         "文章简述:"+project.getDescription()+"<br>"+
                         "<img src='http://123.57.242.246:8080"+project.getImg()+"'>"+"<br>"+
-                        "具体请看<a href='http://123.57.242.246:8080/project/project.html?id="+project.getId()+"'>详细情况</a>"+
-                        "<a href='http://123.57.242.246:8080/project/unsubscribe.html>退订</a>");
+                        "具体请看<a href='http://123.57.242.246:8080/project/project.html?id="+project.getId()+"'>详细情况</a>"+"<br>"+
+                        "<a href='http://123.57.242.246:8080/project/unsubscribe.html'>退订</a>");
         //搜索出已经订阅过的用户
         List<String> emailList= customerMapper.findEmailByMark(Const.CustomerMark.MARK);
         email.setRecipients(emailList);
@@ -186,14 +186,15 @@ public class CustomerServiceImpl implements CustomerService {
             //检测用户的请求是否为取订请求
             if (customer.getMark() == Const.CustomerMark.NO_MARK){
                 //如果数据库中该用户的mark不是已订阅状态的话，返回错误msg该邮箱没有订阅
-                if(mark != Const.CustomerMark.MARK){
-                    ServerResponse.createBySuccessMessage("该邮箱没有订阅");
+                if(mark ==null || mark == Const.CustomerMark.NO_MARK){
+                   return ServerResponse.createByErrorMessage("该邮箱没有订阅");
                 }
                 //如果数据库中该用户的mark是已订阅状态，则执行取订操作
                 else {
                     status = customerMapper.updateMarkByEmail(customer);
+                    System.out.println(status);
                     if (status>0){
-                        ServerResponse.createBySuccess("取订成功");
+                      return   ServerResponse.createBySuccess("取订成功");
                     }
                 }
             }
