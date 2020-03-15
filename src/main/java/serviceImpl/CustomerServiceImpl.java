@@ -53,7 +53,8 @@ public class CustomerServiceImpl implements CustomerService {
         email.setContent("产品名:"+product.getName()+"<br>"+
                          "产品简述:"+product.getDescription()+"<br>"+
                          "<img src='http://123.57.242.246:8080"+product.getImg().getMainImg()+"'>"+"<br>"+
-                         "具体请看<a href='http://123.57.242.246:8080/project/product.html?id="+product.getId()+"'>");
+                         "具体请看<a href='http://123.57.242.246:8080/project/product.html?id="+product.getId()+"'>"+
+                         "<a href='http://123.57.242.246:8080/project/unsubscribe.html>退订</a>");
         //搜索出已经订阅过的用户
         List<String> emailList= customerMapper.findEmailByMark(Const.CustomerMark.MARK);
         email.setRecipients(emailList);
@@ -73,7 +74,8 @@ public class CustomerServiceImpl implements CustomerService {
         email.setContent("文章标题:"+project.getTitle()+"<br>"+
                         "文章简述:"+project.getDescription()+"<br>"+
                         "<img src='http://123.57.242.246:8080"+project.getImg()+"'>"+"<br>"+
-                        "具体请看<a href='http://123.57.242.246:8080/project/project.html?id="+project.getId()+"'>详细情况</a>");
+                        "具体请看<a href='http://123.57.242.246:8080/project/project.html?id="+project.getId()+"'>详细情况</a>"+
+                        "<a href='http://123.57.242.246:8080/project/unsubscribe.html>退订</a>");
         //搜索出已经订阅过的用户
         List<String> emailList= customerMapper.findEmailByMark(Const.CustomerMark.MARK);
         email.setRecipients(emailList);
@@ -97,7 +99,9 @@ public class CustomerServiceImpl implements CustomerService {
         }
         //把客户信息存进数据库
     	int status = customerMapper.insertCustomer(customer);
-        if(status!=0 && customer.getMark() == Const.CustomerMark.MARK && originalMark == Const.CustomerMark.NO_MARK){
+        //
+        if(status!=0 && customer.getMark() == Const.CustomerMark.MARK && originalMark == Const.CustomerMark.NO_MARK ||
+                    originalMark == null){
         	//异步把客户信息通过邮件发送给管理员
             Runnable runnable =new Runnable() {
                 @Override
@@ -110,7 +114,8 @@ public class CustomerServiceImpl implements CustomerService {
                         //设置标题
                         email.setSubject("订阅成功");
                         //设置内容
-                        email.setContent("感谢你的订阅");
+                        email.setContent("感谢你的订阅<br>"+
+                                        "<a href='http://123.57.242.246:8080/project/unsubscribe.html>退订</a>");
                         //设置收件人
                         email.setRecipient(customer.getEmail());
                         //发送并且获取返回值
@@ -132,7 +137,6 @@ public class CustomerServiceImpl implements CustomerService {
         else {
             return ServerResponse.createByError();
         }
-
     }
 
     //订阅和取订功能

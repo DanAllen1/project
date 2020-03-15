@@ -146,10 +146,10 @@
 					<div class="col-footer col-md-4">
 						<h2 class="footer-title">NEWS LETTER</h2>
 						If you want to receive our latest news send directly to your email, please leave your email address bellow. Subscription is free and you can cancel anytime.
-						<form action="#" method="post">
-							<input type="text" name="your-name" value="" size="40" placeholder="Your Email" />
-							<input type="submit" value="SUBSCRIBE" class="btn btn-3" />
-						</form>
+						<div>
+							<input type="text" name="your-name" id="email" value="" size="40" placeholder="Your Email" required/>
+							<input type="submit" value="SUBSCRIBE" class="btn btn-3" onclick="subscribe()"/>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -198,6 +198,8 @@
 	<script src="js/cbpAnimatedHeader.js"></script>
 	
 	<script src="js/lightbox-plus-jquery.min.js"></script>
+	<!--引进自己写的一些js-->
+	<script type="text/javascript" src="mine-js/until.js"></script>
 
     <!--分页-->
 	<script>
