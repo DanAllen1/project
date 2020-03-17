@@ -27,14 +27,15 @@ public class CustomerController {
     public ServerResponse addCustomer(Customer customer, HttpServletResponse response) throws MessagingException, IOException {
         ServerResponse serverResponse;
         serverResponse = customerService.insertCustomer(customer);
-        if (serverResponse.getStatus() == 1){
+        /*if (serverResponse.getStatus() == 1){
             //成功则重定向到成功页面
             response.sendRedirect("/project/successful.html?operate=postMail");
         }
         else {
             //失败则重定向到失败页面
             response.sendRedirect("/project/fault.html");
-        }
+        }*/
+        response.sendRedirect("/project/successful.html?operate=postMail");
         return serverResponse;
     }
     //订阅和取订功能

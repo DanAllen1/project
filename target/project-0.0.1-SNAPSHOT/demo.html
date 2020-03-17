@@ -11,21 +11,28 @@
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/bootstrap.min.js"> </script>
     <script src="js/fileinput.min.js"> </script>
+    <script type="text/javascript" src="mine-js/until.js"></script>
     <style>
 
     </style>
 </head>
 <body>
-        <div id="demo">
-        5555
-        </div>
+   <div>
+    <input type="text" id="email" value="">
+       <input type="button"  value="验证" onclick="go()">
+    </form>
+   </div>
 </body>
+<!--my-->
+
 <script>
-        f();
-        function f() {
-            $('#demo').click(function () {
-                alert("666")
-            })
+    function go() {
+        var email = $("#email").val();
+        if (checkEmail(email)){
+            alert("ok")
+        }else {
+            alert("not")
         }
+    }
 </script>
 </html>

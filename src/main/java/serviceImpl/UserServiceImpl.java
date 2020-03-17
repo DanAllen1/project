@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
-	//检测邮箱是否合法
+	//检测邮箱是否已经注册过账号
 	public ServerResponse checkEmail(User user) {
 		List<User> userList = userMapper.findAllUsers();
 		for(User user1:userList) {
@@ -110,14 +110,14 @@ public class UserServiceImpl implements UserService {
 		return ServerResponse.createBySuccess();
 	}
 
-	//检测用户名是否合法
+	//检测用户名是否已存在
 	@Override
-	public ServerResponse checkUsernameIsValid(String name) {
-		//如果查询数据库中没有改名字，则该名字可以使用
+	public ServerResponse checkUsernameIsExist(String name) {
+		//不存在
 		if (userMapper.findUserByName(name) == null){
+			return ServerResponse.createByError();
+		} else {  //已存在
 			return  ServerResponse.createBySuccess();
-		} else {  //否则返回该用户名已经存在
-			return ServerResponse.createByErrorMessage("用户名已存在");
 		}
 	}
 
@@ -153,9 +153,19 @@ public class UserServiceImpl implements UserService {
 		return ServerResponse.createByErrorMessage("没有用户");
 	}
 
+	//通过用户名和邮件检查用户是否存在
+	@Override
+	public ServerResponse checkUserIsExist(String username, String email) {
+		User user = userMapper.findUserByName(username);
+		if (user != null && user.getEmail().equals(email)){
+			return ServerResponse.createBySuccess();
+		}
+		return ServerResponse.createByErrorMessage("该用户不存在");
+	}
+
 	//找回用户账号密码
-	public  ServerResponse retrieveUserByEmail(String email){
-		User user = userMapper.findUserByEmail(email);
+	public  ServerResponse retrieveUserByUsername(String username){
+		User user = userMapper.findUserByName(username);
 		if (user!=null){
 			return ServerResponse.createBySuccess(user);
 		}

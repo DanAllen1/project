@@ -470,12 +470,12 @@
     //在客户contact us 提交时询问是否同时订阅本网站
     function customerFollow() {
         var mark = document.getElementById("mark");
-        if (confirm("是否同时订阅本网站内容(如果订阅的话，有新产品或project发布会把新产品和文章第一时间发送到你的邮箱去)")){
+        if (confirm("Do you also want to subscribe our products or news, if there is a new product release, the product main message will send to your email")){
             mark.value = 1;
-            alert("订阅成功");
+            alert("Subscribe successful");
         }
         else {
-            alert("以后如需订阅，可在主页底部输入你的邮箱来订阅本网站");
+            alert("If you want to subscribe later, you can enter your email at the bottom of the home page to subscribe to our website");
             mark.value = 0;
         }
         return true;

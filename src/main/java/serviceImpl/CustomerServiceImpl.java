@@ -49,11 +49,11 @@ public class CustomerServiceImpl implements CustomerService {
    //给订阅的用户发邮件 发布商品时
     public ServerResponse postMailToMarkingCustomer(Product product) throws MessagingException {
         Email email = new Email();
-        email.setSubject("有新的商品发布了");
-        email.setContent("产品名:"+product.getName()+"<br>"+
-                         "产品简述:"+product.getDescription()+"<br>"+
+        email.setSubject("News from GNSolar");
+        email.setContent("Product title:"+product.getName()+"<br>"+
+                         "Product description:"+product.getDescription()+"<br>"+
                          "<img src='http://123.57.242.246:8080"+product.getImg().getMainImg()+"'>"+"<br>"+
-                         "具体请看<a href='http://123.57.242.246:8080/project/product.html?id="+product.getId()+"'>"+"<br>"+
+                         "you can <a href='http://123.57.242.246:8080/project/product.html?id="+product.getId()+"'>detail</a>"+"<br>"+
                          "<a href='http://123.57.242.246:8080/project/unsubscribe.html'>退订</a>");
         //搜索出已经订阅过的用户
         List<String> emailList= customerMapper.findEmailByMark(Const.CustomerMark.MARK);
@@ -63,19 +63,19 @@ public class CustomerServiceImpl implements CustomerService {
         if (serverResponse.getStatus() == 1){
             return ServerResponse.createBySuccess();
         }
-        return ServerResponse.createByErrorMessage("发送失败");
+        return ServerResponse.createByErrorMessage("fail to post email");
     }
 
     //给订阅的用户发邮件 发布文章时
     @Override
     public ServerResponse postMailToMarkingCustomer(Project project) throws MessagingException {
         Email email = new Email();
-        email.setSubject("有新的文章发布了");
-        email.setContent("文章标题:"+project.getTitle()+"<br>"+
-                        "文章简述:"+project.getDescription()+"<br>"+
+        email.setSubject("News from GNSolar");
+        email.setContent("Project title:"+project.getTitle()+"<br>"+
+                        "Project description:"+project.getDescription()+"<br>"+
                         "<img src='http://123.57.242.246:8080"+project.getImg()+"'>"+"<br>"+
-                        "具体请看<a href='http://123.57.242.246:8080/project/project.html?id="+project.getId()+"'>详细情况</a>"+"<br>"+
-                        "<a href='http://123.57.242.246:8080/project/unsubscribe.html'>退订</a>");
+                        "You can<a href='http://123.57.242.246:8080/project/project.html?id="+project.getId()+"'>detail</a>"+"<br>"+
+                        "<a href='http://123.57.242.246:8080/project/unsubscribe.html'>unsubscribe</a>");
         //搜索出已经订阅过的用户
         List<String> emailList= customerMapper.findEmailByMark(Const.CustomerMark.MARK);
         email.setRecipients(emailList);
@@ -84,7 +84,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (serverResponse.getStatus() == 1){
             return ServerResponse.createBySuccess();
         }
-        return ServerResponse.createByErrorMessage("发送失败");
+        return ServerResponse.createByErrorMessage("fault to send email");
     }
 
     //存储客户信息
@@ -99,43 +99,65 @@ public class CustomerServiceImpl implements CustomerService {
         }
         //把客户信息存进数据库
     	int status = customerMapper.insertCustomer(customer);
-        //
-        if(status!=0 && customer.getMark() == Const.CustomerMark.MARK && originalMark == Const.CustomerMark.NO_MARK ||
-                    originalMark == null){
-        	//异步把客户信息通过邮件发送给管理员
-            Runnable runnable =new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(5000);
-                        //把顾客信息通过邮件发给管理员
-                        emailUntil.sendCustomerInfo(customer);
-                        Email email = new Email();
-                        //设置标题
-                        email.setSubject("订阅成功");
-                        //设置内容
-                        email.setContent("感谢你的订阅<br>"+
-                                        "<a href='http://123.57.242.246:8080/project/unsubscribe.html>退订</a>");
-                        //设置收件人
-                        email.setRecipient(customer.getEmail());
-                        //发送并且获取返回值
-                        ServerResponse serverResponse = emailUntil.emailPost(email);
-                        if (serverResponse.getStatus() == 0){
-                            customerMapper.deleteCustomerByEmail(customer.getEmail());
-                            System.out.println("该无效邮箱已经删除");
-                        }
-                    } catch (MessagingException | InterruptedException e) {
-                        e.printStackTrace();
+        //如果数据库操作成功
+        if(status > 0){
+            //给第一次访问网站的顾客发一封邮箱
+            if (originalMark == null){
+                {
+                    Email email = new Email();
+                    //设置标题
+                    email.setSubject("Welcome to GNSolar the first time");
+                    //设置内容
+                    email.setContent("Thanks for your view!<br>"+
+                            "hope you can focus on GNSolar，there will be lots of fantastic product<br>"+
+                            "<a href='http://123.57.242.246:8080/project/index.html>主页</a>");
+                    //设置收件人
+                    email.setRecipient(customer.getEmail());
+                    ServerResponse serverResponse = emailUntil.emailPost(email);
+                    if (serverResponse.getStatus() == 0){
+                        customerMapper.deleteCustomerByEmail(customer.getEmail());
+                        System.out.println("该无效邮箱已经删除");
+                        return ServerResponse.createByError();
                     }
                 }
-            };
-            //启动上面的线程
-            Thread thread=new Thread(runnable);
-            thread.start();
+            }
+            //如果用户刚订阅了本网站
+            if (customer.getMark() == Const.CustomerMark.MARK && (originalMark == null || originalMark == Const.CustomerMark.NO_MARK)){
+                //异步把客户信息通过邮件发送给管理员
+                Runnable runnable =new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(5000);
+                            //把顾客信息通过邮件发给管理员
+                            emailUntil.sendCustomerInfo(customer);
+                            Email email = new Email();
+                            //设置标题
+                            email.setSubject("subscribe successful");
+                            //设置内容
+                            email.setContent("you have subscribed GNSolar successful<br>" +
+                                    "Thanks for your subscription!<br>"+
+                                    "<a href='http://123.57.242.246:8080/project/unsubscribe.html>退订</a>");
+                            //设置收件人
+                            email.setRecipient(customer.getEmail());
+                            //发送并且获取返回值
+                            ServerResponse serverResponse = emailUntil.emailPost(email);
+                            if (serverResponse.getStatus() == 0){
+                                customerMapper.deleteCustomerByEmail(customer.getEmail());
+                                System.out.println("该无效邮箱已经删除");
+                            }
+                        } catch (MessagingException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                //启动上面的线程
+                Thread thread=new Thread(runnable);
+                thread.start();
+            }
             return ServerResponse.createBySuccess();
-        }
-        else {
-            return ServerResponse.createByError();
+        } else {
+            return ServerResponse.createByErrorMessage("数据库出现问题");
         }
     }
 
@@ -150,7 +172,7 @@ public class CustomerServiceImpl implements CustomerService {
             if(mark != null){
                 //如果该用户已经订阅过了
                 if (mark == Const.CustomerMark.MARK){
-                    return ServerResponse.createByErrorMessage("该邮箱已经订阅过了");
+                    return ServerResponse.createByErrorMessage("your email account have already subscribed");
                 }
                 //否则把用户的mark状态改为订阅
                 else {
@@ -165,9 +187,10 @@ public class CustomerServiceImpl implements CustomerService {
                 //给用户发一封订阅成功的邮件
                 Email email = new Email();
                 //设置标题
-                email.setSubject("订阅成功");
+                email.setSubject("subscribed successful");
                 //设置内容
-                email.setContent("感谢你的订阅");
+                email.setContent("you have subscribed GNSolar successful<br>" +
+                                "Thanks for your subscription!");
                 //设置收件人
                 email.setRecipient(customer.getEmail());
                 //发送并且获取返回值
@@ -176,9 +199,9 @@ public class CustomerServiceImpl implements CustomerService {
                 //如果发送失败 说明邮箱无效，删除该邮箱的所有记录
                 if (serverResponse.getStatus() == 0){
                     customerMapper.deleteCustomerByEmail(customer.getEmail());
-                    return ServerResponse.createByErrorMessage("请输入有效的邮箱地址");
+                    return ServerResponse.createByErrorMessage("please enter valid email");
                 }
-                return  ServerResponse.createBySuccessMessage("订阅成功");
+                return  ServerResponse.createBySuccessMessage("subscribe successful");
             }
         }
         //如果用户的操作是不是订阅的话
@@ -187,19 +210,19 @@ public class CustomerServiceImpl implements CustomerService {
             if (customer.getMark() == Const.CustomerMark.NO_MARK){
                 //如果数据库中该用户的mark不是已订阅状态的话，返回错误msg该邮箱没有订阅
                 if(mark ==null || mark == Const.CustomerMark.NO_MARK){
-                   return ServerResponse.createByErrorMessage("该邮箱没有订阅");
+                   return ServerResponse.createByErrorMessage("your email account have not subscribed to GNSolar");
                 }
                 //如果数据库中该用户的mark是已订阅状态，则执行取订操作
                 else {
                     status = customerMapper.updateMarkByEmail(customer);
                     System.out.println(status);
                     if (status>0){
-                      return   ServerResponse.createBySuccess("取订成功");
+                      return   ServerResponse.createBySuccess("subscribe successful");
                     }
                 }
             }
         }
-        return ServerResponse.createByErrorMessage("操作失败");
+        return ServerResponse.createByErrorMessage("unknown error");
     }
 
     //删除顾客信息

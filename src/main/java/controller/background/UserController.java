@@ -56,17 +56,18 @@ public class UserController {
 	@PostMapping("/user/retrieveCheckNum")
 	public ServerResponse getRetrieveCheckNumByEmail(@RequestBody User user,HttpSession session) throws MessagingException {
 		String email = user.getEmail();
-		 if(userService.checkEmail(user).getStatus()==1) {
+		//先通过邮箱和用户名检查该账号是否已经存在
+		 if(userService.checkUserIsExist(user.getName(), user.getEmail()).getStatus() == 1) {
 			//生成一个1-1000随机数,并存进session中
 			int checkNum = (int)(Math.random()*1000);
 			session.setAttribute("checkNum", checkNum);
-			session.setAttribute("email",email);
+			session.setAttribute("name",user.getName());
 			//把验证码发给要找回密码的邮箱
 			emailUntil.emailPost(email, checkNum);
 			return ServerResponse.createBySuccessMessage("已发送到qq邮箱，请注意查收");
 		}
 		else {
-			return ServerResponse.createByErrorMessage("该邮箱没有注册账号");
+			return ServerResponse.createByErrorMessage("该账号不存在");
 		}
 	}
 
@@ -93,14 +94,15 @@ public class UserController {
     }
 
 	//验证验证码是否正确，若正确则找回账号密码
-	@GetMapping("/user/checkNum/{checkNum}/email/{email}")
-	public ServerResponse checkNum(@PathVariable Integer checkNum,@PathVariable String email, HttpSession session) {
-		if (checkNum ==null || email ==null){
+	@GetMapping("/user/name/{name}checkNum/{checkNum}")
+	public ServerResponse checkNum(@PathVariable Integer checkNum, @PathVariable String name, HttpSession session) {
+		System.out.println(name);
+		if (checkNum ==null ||name ==null){
 		    return ServerResponse.createByErrorMessage("有未填写的内容");
         }
-		//如果验证码正取，且和邮箱匹配,则执行找回密码操作
-	    if((int)checkNum == (int)session.getAttribute("checkNum") && email.equals(session.getAttribute("email"))) {
-			return userService.retrieveUserByEmail(email);
+		//如果验证码正确，且和邮箱匹配,则执行找回密码操作
+	    if((int)checkNum == (int)session.getAttribute("checkNum") && name.equals(session.getAttribute("name"))) {
+			return userService.retrieveUserByUsername(name);
 		}
 		else {
 			return ServerResponse.createByErrorMessage("验证码错误");
@@ -123,11 +125,16 @@ public class UserController {
         return ServerResponse.createByError();
 	}
 
-	//检验用户名是否重复
+	//检验用户名是否已存在
 	@GetMapping("/user/name/{name}")
 	public ServerResponse checkUsernameIsValid(@PathVariable String name){
 		if (name != null){
-			return userService.checkUsernameIsValid(name);
+			//如果用户名存在
+			if(userService.checkUsernameIsExist(name).getStatus() == 1){
+				return ServerResponse.createByErrorMessage("用户名已存在");
+			} else { //如果用户名不存在
+				return ServerResponse.createBySuccess();
+			}
 		} else {
 			return ServerResponse.createByErrorMessage("用户名不能为空");
 		}

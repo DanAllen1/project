@@ -5,7 +5,7 @@ function subscribe() {
     var email = jQuery.trim($("#email").val());
     //先检查邮件格式对不对，不对就提醒客户
     if (!checkEmail(email)){
-        alert("请输入正确的邮箱格式");
+        alert("please check your email format");
         return;
     }
     $.ajax({
@@ -17,7 +17,7 @@ function subscribe() {
         dataType: "json",
         success: function (data) {
             if (data.status == 1){
-                alert("订阅成功");
+                alert("subscribe successful");
             }
             else {
                 alert(data.msg);

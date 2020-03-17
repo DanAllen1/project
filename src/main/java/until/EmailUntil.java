@@ -247,8 +247,8 @@ public class EmailUntil {
 	    					  "Dear Mr.Lang,<br>"+
 	    					  "Message Content:"+customer.getMessage()+"<br><br><br><br><br>"+
 	    					  "Name:"+customer.getName()+"<br>"+
-	    					  "Company:"+customer.getEmail()+"<br>"+
-	    					  "Email:"+customer.getCompany()+"<br>";
+	    					  "Company:"+customer.getCompany()+"<br>"+
+	    					  "Email:"+customer.getEmail()+"<br>";
 	    					  
 	    message.setContent(emailContent, "text/html;charset=UTF-8");
 	
