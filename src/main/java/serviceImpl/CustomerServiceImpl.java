@@ -53,8 +53,8 @@ public class CustomerServiceImpl implements CustomerService {
         email.setContent("Product title:"+product.getName()+"<br>"+
                          "Product description:"+product.getDescription()+"<br>"+
                          "<img src='http://123.57.242.246:8080"+product.getImg().getMainImg()+"'>"+"<br>"+
-                         "you can <a href='http://123.57.242.246:8080/project/product.html?id="+product.getId()+"'>detail</a>"+"<br>"+
-                         "<a href='http://123.57.242.246:8080/project/unsubscribe.html'>退订</a>");
+                         "you can click <a href='http://123.57.242.246:8080/project/product.html?id="+product.getId()+"'>detail</a> for your info"+"<br>"+
+                         "if you don't like the eamil, you can click <a href='http://123.57.242.246:8080/project/unsubscribe.html'>退订</a> Look forward your next time subscribe");
         //搜索出已经订阅过的用户
         List<String> emailList= customerMapper.findEmailByMark(Const.CustomerMark.MARK);
         email.setRecipients(emailList);
@@ -74,8 +74,8 @@ public class CustomerServiceImpl implements CustomerService {
         email.setContent("Project title:"+project.getTitle()+"<br>"+
                         "Project description:"+project.getDescription()+"<br>"+
                         "<img src='http://123.57.242.246:8080"+project.getImg()+"'>"+"<br>"+
-                        "You can<a href='http://123.57.242.246:8080/project/project.html?id="+project.getId()+"'>detail</a>"+"<br>"+
-                        "<a href='http://123.57.242.246:8080/project/unsubscribe.html'>unsubscribe</a>");
+                        "You can click <a href='http://123.57.242.246:8080/project/project.html?id="+project.getId()+"'>detail</a>"+"<br> for your info"+
+                        "if you don't like the eamil, you can click <a href='http://123.57.242.246:8080/project/unsubscribe.html'>unsubscribe</a>. Look forward your next time subscribe");
         //搜索出已经订阅过的用户
         List<String> emailList= customerMapper.findEmailByMark(Const.CustomerMark.MARK);
         email.setRecipients(emailList);
@@ -106,11 +106,11 @@ public class CustomerServiceImpl implements CustomerService {
                 {
                     Email email = new Email();
                     //设置标题
-                    email.setSubject("Welcome to GNSolar the first time");
+                     email.setSubject("Welcome to GNSolar the first time");
                     //设置内容
                     email.setContent("Thanks for your view!<br>"+
                             "hope you can focus on GNSolar，there will be lots of fantastic product<br>"+
-                            "<a href='http://123.57.242.246:8080/project/index.html>主页</a>");
+                            "<a href='http://123.57.242.246:8080/project/index.html>GNSolar HomePage</a>");
                     //设置收件人
                     email.setRecipient(customer.getEmail());
                     ServerResponse serverResponse = emailUntil.emailPost(email);
@@ -137,7 +137,7 @@ public class CustomerServiceImpl implements CustomerService {
                             //设置内容
                             email.setContent("you have subscribed GNSolar successful<br>" +
                                     "Thanks for your subscription!<br>"+
-                                    "<a href='http://123.57.242.246:8080/project/unsubscribe.html>退订</a>");
+                                    "if you don't like this email, you can click <a href='http://123.57.242.246:8080/project/unsubscribe.html>unsubscribe/a>. Look forward your next time subscribe");
                             //设置收件人
                             email.setRecipient(customer.getEmail());
                             //发送并且获取返回值
@@ -157,7 +157,7 @@ public class CustomerServiceImpl implements CustomerService {
             }
             return ServerResponse.createBySuccess();
         } else {
-            return ServerResponse.createByErrorMessage("数据库出现问题");
+            return ServerResponse.createByErrorMessage("there is something wrong with database");
         }
     }
 
