@@ -52,7 +52,7 @@ public class CustomerManageController {
             session.removeAttribute("latestProduct");
             return customerService.postMailToMarkingCustomer(product);
         }
-        return ServerResponse.createByErrorMessage("没有新产品或文章发布");
+        return ServerResponse.createByErrorMessage("there is no new product or project published");
 
     }
     //获取顾客数量
