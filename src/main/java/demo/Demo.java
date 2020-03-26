@@ -43,9 +43,7 @@ public class Demo {
 		ViewMapper viewMapper = act.getBean(ViewMapper.class);
 		ViewService viewService =act.getBean(ViewService.class);
 		UserMapper userMapper = act.getBean(UserMapper.class);
-		Integer a;
-		a=2;
-		System.out.println(a);
+		System.out.println(userMapper.findUserQuantity());
 	}
 	@Test
 	public void demo2() {

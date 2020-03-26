@@ -11,17 +11,20 @@
     <select id="findUserByName" parameterType="String" resultType="pojo.User">
   		select *from user where name = #{name}
     </select>
-    <select id="findAllUsers" resultType="pojo.User">
-  		select *from user 
-    </select>
-    <select id="findAllUsersExcludeRole" parameterType="Integer" resultType="pojo.User">
-  		select *from user where role != #{role}
-    </select>
     <select id="findUserByEmail" parameterType="String" resultType="pojo.User">
   		select *from user where email = #{email}
     </select>
     <select id="findUserByRole" parameterType="Integer" resultType="pojo.User">
         select *from user where role = #{role}
+    </select>
+    <select id="findAllUsers" resultType="pojo.User">
+  		select *from user
+    </select>
+    <select id="findAllUsersExcludeRole" parameterType="Integer" resultType="pojo.User">
+  		select *from user where role != #{role}
+    </select>
+    <select id="findUserQuantity"  resultType="Integer">
+        select count(*)from user
     </select>
 
     <insert id="insertUser" parameterType="pojo.User">

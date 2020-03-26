@@ -26,4 +26,6 @@ public interface UserService {
     public ServerResponse findAllUsersExcludeRole0(int pageNum, int pageSize);
 
 	public ServerResponse checkUserIsExist(String username, String email);
+
+    public ServerResponse findUserQuantity();
 }

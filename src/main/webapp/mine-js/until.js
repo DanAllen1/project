@@ -1,5 +1,4 @@
 
-
 //订阅功能
 function subscribe() {
     var email = jQuery.trim($("#email").val());
@@ -25,6 +24,7 @@ function subscribe() {
         }
     })
 }
+
 //检查邮箱格式对不对
 function checkEmail(email) {
     var myReg = /^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;

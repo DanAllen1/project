@@ -263,4 +263,10 @@ public class UserController {
 		session.invalidate();
 		return ServerResponse.createBySuccess();
 	}
+
+	//获取用户总数量
+	@GetMapping("/users/quantity")
+	public ServerResponse getUsersQuantity(){
+		return userService.findUserQuantity();
+	}
 }

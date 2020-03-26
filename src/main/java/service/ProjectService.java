@@ -11,6 +11,7 @@ public interface ProjectService {
 	public ServerResponse findProjectById(Integer id);
 	public ServerResponse findProjectBySearchContent(String searchContent,int currentPage, int pageSize);
 	public ServerResponse findProjectQuantity();
+	public ServerResponse findProjectBySort(int sortType,int pageNum, int pageSize);
 
 	public ServerResponse insertProject(Project project,MultipartFile img);
 	public ServerResponse updateProject(Project project,MultipartFile img);

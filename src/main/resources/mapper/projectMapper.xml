@@ -30,6 +30,12 @@
   <select id="findAllProject"  resultMap="Project">
   	 select *from project       
   </select>
+  <select id="findAllProjectOrderByDateASC"  resultMap="Project">
+  	 select *from project order by STR_TO_DATE(date,'%Y-%m-%d %H:%i:%s') ASC
+  </select>
+  <select id="findAllProjectOrderByDateDESC"  resultMap="Project">
+  	 select *from project order by STR_TO_DATE(date,'%Y-%m-%d %H:%i:%s') DESC
+  </select>
   <select id="findProjectQuantity"  resultType="Integer">
   	 select count(*)from project
   </select>

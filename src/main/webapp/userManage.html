@@ -323,7 +323,7 @@
                             <option>admin</option>
                         </select>
                     </div>
-                    <input type="button" class="btn btn-default" value="确定" id="chang-role" style="float: left; height: 45px">
+                    <input type="button" class="btn btn-default" value="确定" id="chang-role" style="float: left; height: 45px" >
                 </div>
             </div>
           </section>
@@ -519,49 +519,50 @@
       var updateUserRoleId;
       function updateUserRoleById(id) {
         updateUserRoleId = id;
-        console.log("ok");
         event.stopPropagation();
         //遮罩层出现
         document.getElementById("mask-box").style.display = 'block';
         //弹出层出现
         document.getElementById("user-role-control").style.display = 'block';
-        //点击弹出层外，弹出层消失
-        $(document).click(function (event) {
-            //遮罩层消失
-            document.getElementById("mask-box").style.display = 'none';
-            //弹出层消失
-            document.getElementById("user-role-control").style.display = 'none';
-        });
-        $('#user-role-control').click(function (event) {
-           //点击弹出层时，不把点击事件传播给父标签
-           event.stopPropagation();
-        })
-        $("#chang-role").click(function () {
-          var roleName = $("#role").val();
-          var role;
-          if (roleName == 'none') role = 0;
-          if (roleName == 'normal') role = 1;
-          if (roleName == 'retailer') role = 2;
-          if (roleName == 'admin') role = 3;
-          $.ajax({
-            url: '/project/background/user/role',
-            type: 'put',
-            data: JSON.stringify({id: updateUserRoleId, role: role}),
-            contentType: "application/json;charset=UTF-8",
-            dataType: "json",
-            success: function (data) {
-              if (data.status == 1) {
-                alert("修改成功");
-                $(document).click();
-                getAllUsers();
 
-              } else {
-                alert(data.msg);
-              }
-            }
-          })
-        })
       }
+      //点击弹出层外，弹出层消失
+      $(document).click(function () {
+        //遮罩层消失
+        document.getElementById("mask-box").style.display = 'none';
+        //弹出层消失
+        document.getElementById("user-role-control").style.display = 'none';
+      });
+      $('#user-role-control').click(function (event) {
+        //点击弹出层时，不把点击事件传播给父标签
+        console.log("mark");
+        event.stopPropagation();
+      })
+      $("#chang-role").click(function (event) {
+        event.stopPropagation();
+        var roleName = $("#role").val();
+        var role;
+        if (roleName == 'none') role = 0;
+        if (roleName == 'normal') role = 1;
+        if (roleName == 'retailer') role = 2;
+        if (roleName == 'admin') role = 3;
+        $.ajax({
+          url: '/project/background/user/role',
+          type: 'put',
+          data: JSON.stringify({id: updateUserRoleId, role: role}),
+          contentType: "application/json;charset=UTF-8",
+          dataType: "json",
+          success: function (data) {
+            if (data.status == 1) {
+              alert("修改成功");
+              $(document).click();
+              getAllUsers();
+            } else {
+              alert(data.msg);
+            }
+          }
+        })
+      })
 
       //删除用户
       function deleteUserById(id) {
@@ -581,6 +582,7 @@
             }
             else {
               alert(data.msg);
+              getAllUsers();
             }
           }
         })
@@ -592,17 +594,17 @@
         document.getElementById('mask-box').style.display = 'block';
         //展示表单
         document.getElementById("update-password-form").style.display = 'block';
-        //点击表单外时
-        $(document).click(function () {
-          //遮罩层消失
-          document.getElementById('mask-box').style.display = 'none';
-          //展示表单消失
-          document.getElementById("update-password-form").style.display = 'none';
-        });
-        $('#update-password-form').click(function (event) {
-          event.stopPropagation();
-        })
       }
+      //点击表单外时
+      $(document).click(function () {
+        //遮罩层消失
+        document.getElementById('mask-box').style.display = 'none';
+        //展示表单消失
+        document.getElementById("update-password-form").style.display = 'none';
+      });
+      $('#update-password-form').click(function (event) {
+        event.stopPropagation();
+      })
     </script>
   </body>
 </html>

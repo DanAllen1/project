@@ -12,4 +12,10 @@ public class Const {
         public static final int ROLE_RETAILER = 2; //商家
         public static final int ROLE_ADMIN = 3; //管理员
     }
+
+    public interface ProjectSort{
+        int DEFAULT =0;
+        int DATE_ASC = 1;
+        int DATE_DESC = 2;
+    }
 }
