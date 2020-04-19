@@ -216,7 +216,16 @@
     <script type="text/javascript" src="mine-js/until.js"></script>
     <!--获取商品的种类个数-->
     <script type="text/javascript">
-        /* $(document).ready(findAllCategory()); */
+		//获取url参数的方法
+		function getQueryString(name)
+		{
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+			if(r!=null)
+				return  unescape(r[2]);
+			return null;
+		}
+		//查找到全部分类
         findAllCategory();
         function findAllCategory(){
             $.ajax({
@@ -234,7 +243,7 @@
                         alert("服务器出现问题") ;
                     else{
                         for (var i=0;i<data.data.length;i++){                    
-                            categorys+="<li><a href='#' onclick='hidePaging()' data-filter='."+data.data[i].sort+"'>"+data.data[i].sort+"</a></li>";
+                            categorys+="<li><a  id='"+data.data[i].sort+"' onclick='hidePaging(this)' data-filter='."+data.data[i].sort+"'>"+data.data[i].sort+"</a></li>";
                         }
                     }
                     $("#sorts").html(categorys);
@@ -263,13 +272,36 @@
             findAllProduct();
         }
     </script>
+	//解决模板的bug
+	<script>
+		//为了解决模板的bug，在点击分类的时候直接刷新页面 然后根据url中的category来判断
+		//隐藏分页信息
+		function hidePaging(e) {
+			$("#paging").css('visibility','hidden');
+			if (getQueryString("category") == null){
+				var category = e.id;
+				window.location.href = "products.html?category="+category;
+			}
+		}
+		//显示分页信息
+		function showPaging() {
+			$("#paging").css('visibility','visible');
+			window.location.href = "products.html";
+		}
+	</script>
     <!--展示商品-->
     <script type="text/javascript">
-        /* $(document).ready(findAllProduct()); */
-        findAllProduct();
+		var pageSize = 9;
+		if (getQueryString("category") == null){
+			pageSize = 9;
+			findAllProduct();
+		} else {
+			pageSize = 1000;
+			findAllProduct();
+		}
         function findAllProduct(){
             $.ajax({
-                url : "/project/foreground/products?currentPage="+currentPage+"&pageSize=9",
+                url : "/project/foreground/products?currentPage="+currentPage+"&pageSize="+pageSize,
                 type : "get",
                 //发送的数据
                 data :"",
@@ -342,14 +374,6 @@
 			var searchUrl =encodeURI("SearchResult2.html?searchText="+searchText);   //使用encodeURI编码
 			window.location.href =searchUrl;
 		})
-		//隐藏分页信息
-        function hidePaging() {
-            $("#paging").css('visibility','hidden');
-        }
-        //显示分页信息
-        function showPaging() {
-            $("#paging").css('visibility','visible');
-        }
 	</script>
 </body>
 </html>

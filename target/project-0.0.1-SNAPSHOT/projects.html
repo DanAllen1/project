@@ -33,6 +33,12 @@
 			height: 360px;
 			width: 100%;
 		}
+        .checked {
+            border-color: cornflowerblue;
+        }
+        .unchecked {
+
+        }
 	</style>
 	
 </head>
@@ -112,6 +118,11 @@
 					 	</div>
 					 </div>
 				</div>
+				<div>
+					<input type="button" value="Default" id="order-by-default" class="checked">
+					<input type="button" value="Date↓" id="order-by-date" class="unchecked">
+				</div>
+                <br>
 				<div class="row" id="projects">
 
 				</div>
@@ -209,18 +220,39 @@
             //字符串转变成整数型
             currentPage = parseInt( $("#currentPage").text() );
             currentPage = currentPage+1;
-            getProjects();
+            if (document.getElementById("order-by-date").className == "checked"){
+                getProjectBySort();
+                return;
+            }
+            if (document.getElementById("order-by-default").className == "checked"){
+                getProjects();
+                return;
+            }
         }
         //上一页
         function back(){
             currentPage = $("#currentPage").text();
             currentPage = currentPage-1;
-            getProjects();
+            if (document.getElementById("order-by-date").className == "checked"){
+                getProjectBySort();
+                return;
+            }
+            if (document.getElementById("order-by-default").className == "checked"){
+                getProjects();
+                return;
+            }
         }
         //跳页码
         function transfer(e){
             currentPage = parseInt( $(e).text() );
-            getProjects();
+            if (document.getElementById("order-by-date").className == "checked"){
+                getProjectBySort();
+                return;
+            }
+            if (document.getElementById("order-by-default").className == "checked"){
+                getProjects();
+                return;
+            }
         }
         //获取全部project并展示
 		window.onload = getProjects;
@@ -233,54 +265,110 @@
                 contentType: "application/json;charset=UTF-8",
                 dataType: "json",
                 success: function (data) {
-                    var projectContent = "";
-                    for (var i =0 ;i<data.data.list.length;i++){
-                        projectContent+=
-                            '<div class="post" style="background: #fff;">'+
-                                '<div class="col-lg-6" style="padding: 0;">'+
-                                    '<img src="'+data.data.list[i].img+'"/>'+
-                                '</div>'+
-                                '<div class="col-lg-6">'+
-                                    '<div class="t-center" style="padding: 70px 0;">'+
-                                        '<h3>'+data.data.list[i].title+'</h3>'+
-                                        '<p>'+data.data.list[i].description+'</p>'+
-                                        '<a class="btn btn-skin" href="project.html?id='+data.data.list[i].id+'">Read More</a>'+
-                                    '</div>'+
-                                '</div>'+
-                            '</div>';
-                    }
-                    $("#projects").html(projectContent);
-                    var pageInfo = "";
-                    //不是第一页的时才显示上一页按钮
-                    if (data.data.pageNum!=1){
-                        pageInfo+="<button  name='back' id='back' onclick='back()'>上一页</button>"
-                    }
-                    for (var i=1 ;i<=data.data.pages;i++){
-                        //如果是当前页码的话，颜色变蓝
-                        if(i==data.data.pageNum){
-                            pageInfo+="<button id='currentPage' style='background-color: #007bff'>"+i+"</button>";
-                        }
-                        else{
-                            pageInfo+="<button  onclick='transfer(this)'>"+i+"</button>";
-                        }
-                    }
-                    //不是最后一页时才显示下一页按钮
-                    if (data.data.pageNum!=data.data.pages){
-                        pageInfo+="<button  name='next' id='next' onclick='next()'>下一页</button>";
-                    }
-                    $("#pageInfo").html(pageInfo);
+                	//通过获取到的数据把project内容输出到html
+                    setProjects(data);
+                }
+            })
+        }
+		//project排序
+		var ProjectSort = {
+            DATE_ASC : 1 ,
+			DATE_DESC :2 ,
+		}
+		//project默认排序
+		document.getElementById("order-by-default").addEventListener("click", function () {
+            //按钮变成选择状态
+            document.getElementById("order-by-date").className = "unchecked";
+            document.getElementById("order-by-default").className = "checked";
+            //从第一页开始
+            currentPage = 1;
+			getProjects();
+		})
+		//project按日期排序
+        var keyword;//排序关键字
+		document.getElementById("order-by-date").addEventListener("click", function () {
+		    //按钮变成选择状态
+            document.getElementById("order-by-date").className = "checked";
+            document.getElementById("order-by-default").className = "unchecked";
+			//获取点击前的排序
+			var sortType = $("#order-by-date").val();
+			//如果目前是升序，则点击后改成降序
+			if (sortType == "Date↑"){
+				keyword = ProjectSort.DATE_DESC;
+				$("#order-by-date").val("Date↓");
+			} else if (sortType == "Date↓"){ //如果是降序则点击后改成升序
+				keyword = ProjectSort.DATE_ASC;
+				$("#order-by-date").val("Date↑");
+			} else {
+				return;
+			}
+            //从第一页开始
+            currentPage = 1;
+			getProjectBySort();
+		})
+        //通过排序方式获取产品
+        function getProjectBySort(){
+            $.ajax({
+                url: "/project/foreground/projects/sort/"+keyword+"?pageSize=8&currentPage="+currentPage,
+                type: "get",
+                //发送的数据
+                data: '',
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (data) {
+                    setProjects(data);
                 }
             })
         }
 	</script>
     <!--tool-->
     <script>
+		//通过获取到的project数据渲染内容并把内容输出到html
+		function setProjects(data) {
+			var projectContent = "";
+			for (var i =0 ;i<data.data.list.length;i++){
+				projectContent+=
+						'<div class="post" style="background: #fff;">'+
+							'<div class="col-lg-6" style="padding: 0;">'+
+								'<img src="'+data.data.list[i].img+'"/>'+
+							'</div>'+
+							'<div class="col-lg-6">'+
+								'<div class="t-center" style="padding: 70px 0;">'+
+									'<h3>'+data.data.list[i].title+'</h3>'+
+									'<p>'+data.data.list[i].description+'</p>'+
+									'<a class="btn btn-skin" href="project.html?id='+data.data.list[i].id+'">Read More</a>'+
+								'</div>'+
+							'</div>'+
+						'</div>';
+			}
+			$("#projects").html(projectContent);
+			var pageInfo = "";
+			//不是第一页的时才显示上一页按钮
+			if (data.data.pageNum!=1){
+				pageInfo+="<button  name='back' id='back' onclick='back()'>上一页</button>"
+			}
+			for (var i=1 ;i<=data.data.pages;i++){
+				//如果是当前页码的话，颜色变蓝
+				if(i==data.data.pageNum){
+					pageInfo+="<button id='currentPage' style='background-color: #007bff'>"+i+"</button>";
+				}
+				else{
+					pageInfo+="<button  onclick='transfer(this)'>"+i+"</button>";
+				}
+			}
+			//不是最后一页时才显示下一页按钮
+			if (data.data.pageNum!=data.data.pages){
+				pageInfo+="<button  name='next' id='next' onclick='next()'>下一页</button>";
+			}
+			$("#pageInfo").html(pageInfo);
+		}
 		//点击搜索
 		$("#searchButton").click(function(){
 			var searchText= jQuery.trim($("#searchContent").val());
 			var searchUrl =encodeURI("SearchResult.html?searchText="+searchText);   //使用encodeURI编码
 			window.location.href =searchUrl;
-		})
+		});
+
     </script>
 </body>
 </html>

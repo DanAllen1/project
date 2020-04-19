@@ -12,6 +12,7 @@ public interface UserMapper {
 	public List<User> findUserByRole(Integer role);
 	public List<User> findAllUsers();
 	public List<User> findAllUsersExcludeRole(Integer role);
+	public Integer findUserQuantity();
 
 	public Integer insertUser(User user);
 
@@ -20,6 +21,6 @@ public interface UserMapper {
 
 	public Integer deleteUserById(Integer id);
 
-	
-	
+
+
 }

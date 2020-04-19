@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import common.Const;
 import common.UploadPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,23 @@ public class ProjectServiceImpl implements ProjectService {
 	//获取全部文章的数量
 	public ServerResponse findProjectQuantity() {
 		return ServerResponse.createBySuccess(projectMapper.findProjectQuantity());
+	}
+
+	//按日期排序
+	@Override
+	public ServerResponse findProjectBySort(int sortType,int pageNum, int pageSize) {
+		PageHelper.startPage(pageNum,pageSize);
+		if (sortType == Const.ProjectSort.DATE_DESC){
+			List<Project> projectList = projectMapper.findAllProjectOrderByDateDESC();
+			PageInfo<Project> projectPageInfo = new PageInfo<>(projectList);
+			return  ServerResponse.createBySuccess(projectPageInfo);
+		}
+		if (sortType == Const.ProjectSort.DATE_ASC){
+			List<Project> projectList = projectMapper.findAllProjectOrderByDateASC();
+			PageInfo<Project> projectPageInfo = new PageInfo<>(projectList);
+			return  ServerResponse.createBySuccess(projectPageInfo);
+		}
+		return ServerResponse.createByErrorMessage("没有这种排序方式");
 	}
 
 	//添加文章

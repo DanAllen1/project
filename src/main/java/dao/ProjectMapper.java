@@ -12,7 +12,10 @@ public interface ProjectMapper {
 	public List<Project> findProjectBySearchContent(@Param(value="searchContent")String searchContent);
 	public Project findProjectByTitle(String title);
 	public List<Project> findAllProject();
+	public List<Project> findAllProjectOrderByDateASC();
+	public List<Project> findAllProjectOrderByDateDESC();
 	public Integer findProjectQuantity();
+
 
 	public Integer insertProject(Project project);
 	

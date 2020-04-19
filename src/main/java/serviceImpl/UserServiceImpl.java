@@ -163,6 +163,16 @@ public class UserServiceImpl implements UserService {
 		return ServerResponse.createByErrorMessage("该用户不存在");
 	}
 
+	//获取用户总数量
+	@Override
+	public ServerResponse findUserQuantity() {
+		Integer userQuantity = userMapper.findUserQuantity();
+		if (userQuantity != null){
+			return ServerResponse.createBySuccess(userQuantity);
+		}
+		return ServerResponse.createByError();
+	}
+
 	//找回用户账号密码
 	public  ServerResponse retrieveUserByUsername(String username){
 		User user = userMapper.findUserByName(username);

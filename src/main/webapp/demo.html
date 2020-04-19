@@ -16,23 +16,16 @@
 
     </style>
 </head>
-<body>
-   <div>
-    <input type="text" id="email" value="">
-       <input type="button"  value="验证" onclick="go()">
-    </form>
-   </div>
+<body background="/project/img/bg.jpg">
+    <div style="width: 10px" id="tes" onclick="test(this)">
+        777
+    </div>
+    <a href="index.html" id="go">gotohome</a>
+
 </body>
 <!--my-->
 
 <script>
-    function go() {
-        var email = $("#email").val();
-        if (checkEmail(email)){
-            alert("ok")
-        }else {
-            alert("not")
-        }
-    }
+    document.getElementById("go").click();
 </script>
 </html>
