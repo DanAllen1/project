@@ -5,7 +5,6 @@ import common.ServerResponse;
 import dao.CustomerMapper;
 import dao.ProductMapper;
 import dao.ProjectMapper;
-import oracle.jrockit.jfr.openmbean.ProducerDescriptorType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pojo.Customer;
@@ -89,13 +88,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     //存储客户信息
     public ServerResponse insertCustomer(Customer customer) throws MessagingException {
-        Integer originalMark = null;
+        final Integer originalMark;
         //先查询该邮箱是否已经存在数据库
         if (customerMapper.findCustomersByEmail(customer.getEmail()).size() != 0){
             //获取以前的订阅状态
             originalMark = customerMapper.findMarkByEmail(customer.getEmail());
             //如果存在，把数据库内该邮箱的记录的订阅状态更新一下
             customerMapper.updateMarkByEmail(customer);
+        } else {
+            originalMark = null;
         }
         //把客户信息存进数据库
     	int status = customerMapper.insertCustomer(customer);
@@ -121,17 +122,18 @@ public class CustomerServiceImpl implements CustomerService {
                     }
                 }
             }
-            //如果用户刚订阅了本网站
-            if (customer.getMark() == Const.CustomerMark.MARK && (originalMark == null || originalMark == Const.CustomerMark.NO_MARK)){
-                //异步把客户信息通过邮件发送给管理员
-                Runnable runnable =new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(5000);
-                            //把顾客信息通过邮件发给管理员
-                            emailUntil.sendCustomerInfo(customer);
-                            Email email = new Email();
+
+            //异步把客户信息通过邮件发送给管理员
+            Runnable runnable =new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(5000);
+                        //把顾客信息通过邮件发给管理员
+                        emailUntil.sendCustomerInfo(customer);
+                        //如果用户刚订阅了本网站,给用户发一封邮件
+                        Email email = new Email();
+                        if (customer.getMark() == Const.CustomerMark.MARK && originalMark != Const.CustomerMark.MARK){
                             //设置标题
                             email.setSubject("subscribe successful");
                             //设置内容
@@ -146,15 +148,15 @@ public class CustomerServiceImpl implements CustomerService {
                                 customerMapper.deleteCustomerByEmail(customer.getEmail());
                                 System.out.println("该无效邮箱已经删除");
                             }
-                        } catch (MessagingException | InterruptedException e) {
-                            e.printStackTrace();
                         }
+                    } catch (MessagingException | InterruptedException e) {
+                        e.printStackTrace();
                     }
-                };
-                //启动上面的线程
-                Thread thread=new Thread(runnable);
-                thread.start();
-            }
+                }
+            };
+            //启动上面的线程
+            Thread thread=new Thread(runnable);
+            thread.start();
             return ServerResponse.createBySuccess();
         } else {
             return ServerResponse.createByErrorMessage("there is something wrong with database");
@@ -235,4 +237,5 @@ public class CustomerServiceImpl implements CustomerService {
             return ServerResponse.createByError();
         }
     }
+
 }

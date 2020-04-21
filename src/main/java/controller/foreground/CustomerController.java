@@ -18,7 +18,6 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/foreground")
 public class CustomerController {
-
     ApplicationContext act=new ClassPathXmlApplicationContext("applicationContext.xml");
     CustomerService customerService = act.getBean(CustomerService.class);
 
@@ -47,4 +46,5 @@ public class CustomerController {
         }
         return customerService.updateMarkByEmail(customer);
     }
+
 }

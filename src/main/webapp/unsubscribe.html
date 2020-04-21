@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>unsubscribe</title>
+</head>
+<style>
+    .home{
+        margin: 20% auto;
+        text-align: center;
+    }
+</style>
+<body>
+    <div class="home">
+        <a href="index.html"><h1>Company homepage</h1></a>
+    </div>
+
+
+    <!--jQuery-->
+    <script type="text/javascript" src="js/jquery-2.1.1.js"></script>
+    <!--my-->
+    <script type="text/javascript" src="mine-js/until.js"></script>
+
+<script>
+    //退订
+    var email;
+    $(document).ready(function () {
+       email = prompt("please enter which one mailbox account you want to unsubscribe","");
+       if (email != null){
+           if (checkEmail(email)){
+               if (confirm("sure to unsubscribe")){
+                   unsubscribe();
+               }
+           }
+           else {
+               alert("your email is invalid");
+           }
+       }
+
+    });
+    //退订
+    function unsubscribe() {
+        var mark = 0;
+        $.ajax({
+            url: "/project/foreground/customer/mark",
+            type: "put",
+            data: JSON.stringify({email:email,mark:mark}),
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (data) {
+                if (data.status == 1){
+                    alert("unsubscribe successful！you won't receive email about our company");
+                }
+                else {
+                    alert(data.msg);
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>
