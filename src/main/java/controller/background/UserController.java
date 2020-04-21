@@ -94,7 +94,7 @@ public class UserController {
     }
 
 	//验证验证码是否正确，若正确则找回账号密码
-	@GetMapping("/user/name/{name}checkNum/{checkNum}")
+	@GetMapping("/user/name/{name}/checkNum/{checkNum}")
 	public ServerResponse checkNum(@PathVariable Integer checkNum, @PathVariable String name, HttpSession session) {
 		System.out.println(name);
 		if (checkNum ==null ||name ==null){

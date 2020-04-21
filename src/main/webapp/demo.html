@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-    <!--Fileupload-->
-    <link href="css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
-    <!--js file-->
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/bootstrap.min.js"> </script>
-    <script src="js/fileinput.min.js"> </script>
-    <script type="text/javascript" src="mine-js/until.js"></script>
-    <style>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <!-- Bootstrap CSS-->
+        <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+        <!--Fileupload-->
+        <link href="css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+        <!--js file-->
+        <script src="js/jquery-2.1.1.js"></script>
+        <script src="js/bootstrap.min.js"> </script>
+        <script src="js/fileinput.min.js"> </script>
+        <script type="text/javascript" src="mine-js/until.js"></script>
+        <style>
 
-    </style>
-</head>
-<body background="/project/img/bg.jpg">
-    <div style="width: 10px" id="tes" onclick="test(this)">
-        777
-    </div>
-    <a href="index.html" id="go">gotohome</a>
+        </style>
+    </head>
+    <body >
+        <form action="www.baidu.com" id="zhong">
 
-</body>
+        </form>
+
+    </body>
 <!--my-->
 
 <script>
-    document.getElementById("go").click();
+
+
+    window.onload = function () {
+       document.getElementById("zhong").submit();
+    }
 </script>
 </html>

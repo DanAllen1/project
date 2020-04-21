@@ -10,10 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import common.ServerResponse;
 import pojo.*;
 import redis.clients.jedis.Jedis;
-import service.CategoryService;
-import service.ProductService;
-import service.ProjectService;
-import service.ViewService;
+import service.*;
 import serviceImpl.ProductServiceImpl;
 import until.EmailUntil;
 import until.ImgTransformToString;
@@ -43,20 +40,12 @@ public class Demo {
 		ViewMapper viewMapper = act.getBean(ViewMapper.class);
 		ViewService viewService =act.getBean(ViewService.class);
 		UserMapper userMapper = act.getBean(UserMapper.class);
-		System.out.println(userMapper.findUserQuantity());
+		CustomerService customerService =act.getBean(CustomerService.class);
+
 	}
 	@Test
 	public void demo2() {
-		Timer timer = new Timer();
-		TimerViewTask timerViewTask =new TimerViewTask();
-		timer.scheduleAtFixedRate(timerViewTask,new Date(),1000);
-		System.out.println("测试");
-		/*try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}*/
-		/*timerViewTask.cancel();*/
+
 	}
 
 	@Test
